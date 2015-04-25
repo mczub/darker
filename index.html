@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <!-- Latest compiled and minified CSS -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
@@ -17,7 +18,7 @@
     $(document).ready(function(){
         var vh = $(window).height()/window.devicePixelRatio;
         var navh = $(".nav").height() + 60;
-        console.log(navh)
+        console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
         $(".biglogo").width($(".col-md-4").width());
     });
@@ -46,6 +47,7 @@
             <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
         </div>
     </section>
+    <div class="container-fluid">
     <div class="row">
         <div class="col-md-4 nav-container">
             <ul class="nav nav-stacked">
@@ -82,6 +84,7 @@
                 <p>email</p>
             </section>
         </div>
+    </div>
     </div>
 </body>
 <script src="./script/background.js"></script>

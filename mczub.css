@@ -10,17 +10,9 @@ a
 {
 	color:rgba(200,200,200,1);
 }
-video#bgvid {
-position: absolute; right: 0; bottom: 0;
-margin:auto;
-min-width: 40%; min-height: 60%;
-width: auto; height: auto; z-index: -100;
-background: url(polina.jpg) no-repeat;
-background-size: cover;
-}
 .intro
 {
-	/*background: -webkit-canvas(grid) no-repeat 50% 50%;*/
+	/*background: -webkit-canvas(grid) no-repeat 50% 50%;
 	min-height:100vh;
 	width:100%;
 	/*background-color:rgba(40, 40, 40, 1);*/
@@ -41,10 +33,21 @@ background-size: cover;
 	width:400px;
 	top:20px;
 	padding-left:20px;
+	padding-right:20px;
 	font-size:2em;
 	position:fixed;
 	text-transform:lowercase;
 	background-color:rgba(0,0,0,0.6);
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.biglogo:hover
+{
+	cursor:default;
 }
 .logo-text-front
 {
@@ -93,6 +96,6 @@ section
 }
 .content
 {
-	padding:40px;
+	padding-top:40px;
 	font-size:18px;
 }
