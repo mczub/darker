@@ -131,8 +131,13 @@ function redraw()
 
 function setBackground()
 {
-	var url = canvas.toDataURL('image/png');
-	document.getElementsByClassName("intro")[0].style.background = "url(" + url + ") no-repeat 50% 50%";
+	var url = canvas.toDataURL('image/jpg');
+	var img = new Image();
+	img.onload = function()
+	{
+		document.getElementsByClassName("intro")[0].style.background = "url(" + img.src + ") no-repeat 50% 50%";
+	};
+	img.src = url;
 	//document.getElementsByClassName("intro")[0].style.background = "url('../grass.jpg') no-repeat 50% 50%";
 	//console.log($("section.intro").css("background-image"));
 }
