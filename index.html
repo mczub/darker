@@ -1,0 +1,87 @@
+<!-- Latest compiled and minified CSS -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="./mczub.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./script/jquery.sticky.js"></script>
+<script>
+    $(document).ready(function(){
+        var vh = $(window).height()/window.devicePixelRatio;
+        var navh = $(".nav").height() + 60;
+        console.log(navh)
+        $(".nav").sticky({topSpacing:(vh-navh)});
+        $(".biglogo").width($(".col-md-4").width());
+    });
+    $(window).resize(function() {
+        $(".nav").unstick();
+        var vh = $(window).height()/window.devicePixelRatio;
+        var navh = $(".nav").height() + 60;
+        $(".nav").sticky({topSpacing:(vh-navh)});
+    });
+    var $root = $('html, body');
+    $('a').click(function() {
+        var href = $.attr(this, 'href');
+        $root.animate({
+            scrollTop: $(href).offset().top
+            }, 500);
+        return false;
+    });
+</script>
+<head>
+</head>
+<body>
+    <section class="intro">
+        <div class="logo biglogo">
+            <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>
+            <hr class="logo-line"/>
+            <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-md-4 nav-container">
+            <ul class="nav nav-stacked">
+                <li role="presentation" class="active"><a href="#about">About</a></li>
+                <li role="presentation"><a href="#resume">Resume</a></li>
+                <li role="presentation"><a href="#projects">Projects</a></li>
+                <li role="presentation"><a href="#music">Music</a></li>
+                <li role="presentation"><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8 content-frame">
+            <section id="about" class="content">
+                <p>My name is Matthew Czubakowski, and welcome to my personal website.</p>
+                <p>I'm a software engineer located in San Francisco. I graduated from <a href="http://caltech.edu">Caltech</a> in 2009.</p>
+                <p>By day, I develop test automation for Xero in San Francisco. I have a <a href="#resume" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='resume']">broad skillset</a> with experience in software development, mixed-signal ASIC design, systems engineering, and circuit design and test.</p>
+                <p>By night, I <a href="#projects" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='projects']">experiment</a> with web design, game development, music, and video game livestreaming.</p>
+                <p>Feel free to <a href="#connect" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='connect']">connect</a> with me through social media. I'm easiest to get a hold of through <a href="mailto:mczub@mczub.com">e-mail</a>, <a href="http://twitter.com/mczub">Twitter</a>, and <a href="http://facebook.com/mczub">Facebook</a>.</p>
+            </section>
+            <section id="resume" class="content">
+                <p>hurf durf resume!</p>
+                <p>durf hurf university</p>
+            </section>
+            <section id="projects" class="content">
+                <p>hurf durf projects!</p>
+                <p>durf hurf stuff i made</p>
+            </section>
+            <section id="music" class="content">
+                <p>hurf durf piano!</p>
+                <p>durf hurf violin!</p>
+            </section>
+            <section id="contact" class="content">
+                <p>twitter</p>
+                <p>facebook</p>
+                <p>email</p>
+            </section>
+        </div>
+    </div>
+</body>
+<script src="./script/background.js"></script>
