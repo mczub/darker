@@ -13,9 +13,17 @@ var textures = new Array(
 	new Image(),
 	new Image()
 );
-
-
 var styleArray = new Array();
+
+socket = io.connect();
+
+socket.on('state', function(data){
+	console.log(data)
+	styleArray = data;
+	redraw();
+})
+
+/*var styleArray = new Array();
 for (var i = 0; i < NUM_X; i++)
 {
 	styleArray[i] = new Array();
@@ -23,15 +31,16 @@ for (var i = 0; i < NUM_X; i++)
 	{
 		styleArray[i][j] = Math.floor((Math.random() * textures.length));
 	}
-}
+}*/
 function checkAllTexturesLoaded()
 {
 	texturesReady++;
 	if (texturesReady >= textures.length)
 	{
+		socket.emit('connected');
 		drawGlyphMask();
-		drawImages();
-		setBackground();
+		//drawImages();
+		//setBackground();
 		texturesReady = 0;
 	}
 }
@@ -145,11 +154,12 @@ function setBackground()
 function increment(x_pos,y_pos)
 {
 	//console.log(styleArray);
-	styleArray[x_pos][y_pos]++;
-	styleArray[x_pos][y_pos] %= textures.length;
-	drawTexture(x_pos, y_pos, styleArray[x_pos][y_pos]);
-	setBackground();
+	//styleArray[x_pos][y_pos]++;
+	//styleArray[x_pos][y_pos] %= textures.length;
+	//drawTexture(x_pos, y_pos, styleArray[x_pos][y_pos]);
+	//setBackground();
 	//redraw();
+	socket.emit('click',new Array(x_pos, y_pos));
 }
 
 
