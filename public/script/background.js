@@ -14,6 +14,8 @@ var textures = new Array(
 	new Image()
 );
 var styleArray = new Array();
+drawGlyphMask();
+setBackground();
 
 socket = io.connect();
 
@@ -78,7 +80,7 @@ function drawXGlyph(x_pos, y_pos)
 	var x_start = x_unit / 4
 	var y_start = y_unit / 4
 	ctx.lineWidth = x_unit / 8;
-	ctx.strokeStyle = 'blue';
+	ctx.strokeStyle = 'rgba(255,255,255,0.5)';
 	ctx.beginPath();
 	ctx.moveTo(x_start + x_offset, y_start + y_offset);
 	ctx.lineTo((x_start * 3) + x_offset, (y_start * 3) + y_offset);
