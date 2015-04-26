@@ -34,5 +34,5 @@ app.io.route('click', function(req){
 /*app.get('/', function(req, res) {
     res.sendfile(__dirname + '/index.html')
 })*/
-
-app.listen(7076);
+var port = process.env.PORT || 7076;
+app.listen(port);
