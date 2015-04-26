@@ -102,7 +102,7 @@ function drawTexture(x_pos, y_pos, texture)
     //ctx.drawImage(img, x_offset, y_offset, x_unit, y_unit);
     //console.log(texture);
     ctx.drawImage(textures[texture], x_offset,y_offset,x_unit,y_unit);
-    ctx.fillStyle="rgba(0,0,0,0.5)";
+    ctx.fillStyle="rgba(0,0,0,0.2)";
     ctx.fillRect(x_offset,y_offset,x_unit,y_unit);
 }
 
