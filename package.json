@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/mczub/darker"
   "dependencies": {
-    "express.io": "1.1.13"
+    "express.io": "*"
   }
 }
