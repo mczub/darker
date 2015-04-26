@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/mczub/darker/issues"
   },
-  "homepage": "https://github.com/mczub/darker"
+  "homepage": "https://github.com/mczub/darker",
   "dependencies": {
     "express.io": "*"
   }
