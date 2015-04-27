@@ -23,11 +23,11 @@ app.io.route('connected', function(req){
 })
 
 app.io.route('click', function(req){
+	console.log('got click' + req.data)
 	var x = req.data[0];
 	var y = req.data[1];
 	styleArray[x][y]++
 	styleArray[x][y] %= NUM_TEXTURES;
-	console.log('got click')
 	app.io.broadcast('state', styleArray);
 })
 

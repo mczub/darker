@@ -161,7 +161,9 @@ function increment(x_pos,y_pos)
 	//drawTexture(x_pos, y_pos, styleArray[x_pos][y_pos]);
 	//setBackground();
 	//redraw();
-	socket.emit('click',new Array(x_pos, y_pos));
+	if (x_pos >= 0 && y_pos >= 0){
+		socket.emit('click',new Array(x_pos, y_pos));
+	}
 }
 
 

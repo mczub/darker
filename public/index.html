@@ -21,7 +21,7 @@
         var navh = $(".nav").height() + 60;
         console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
-        $(".biglogo").width($(".col-md-4").width());
+        //$(".biglogo").width($(".col-md-4").width());
     });
     $(window).resize(function() {
         $(".nav").unstick();
@@ -29,27 +29,20 @@
         var navh = $(".nav").height() + 60;
         $(".nav").sticky({topSpacing:(vh-navh)});
     });
-    var $root = $('html, body');
-    $('a').click(function() {
-        var href = $.attr(this, 'href');
-        $root.animate({
-            scrollTop: $(href).offset().top
-            }, 500);
-        return false;
-    });
 </script>
 <head>
 </head>
 <body>
+    <div id="top"></div>
     <section class="intro">
         <div class="logo smalllogo hidden-md hidden-lg">
             <span class="logo-text-front">mczub.com</span>
         </div>
-        <div class="logo biglogo hidden-xs hidden-sm">
+        <a href="#top"><div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>
             <hr class="logo-line"/>
             <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
-        </div>
+        </div></a>
     </section>
     <div class="container-fluid">
     <div class="row">
@@ -67,9 +60,9 @@
                 <div class='content-header'>About</div>
                 <p>My name is Matthew Czubakowski, and welcome to my personal website.</p>
                 <p>I'm a software engineer located in San Francisco. I graduated from <a href="http://caltech.edu">Caltech</a> in 2009.</p>
-                <p>By day, I develop test automation for Xero in San Francisco. I have a <a href="#resume" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='resume']">broad skillset</a> with experience in software development, mixed-signal ASIC design, systems engineering, and circuit design and test.</p>
-                <p>By night, I <a href="#projects" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='projects']">experiment</a> with web design, game development, music, and video game livestreaming.</p>
-                <p>Feel free to <a href="#connect" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='connect']">connect</a> with me through social media. I'm easiest to get a hold of through <a href="mailto:mczub@mczub.com">e-mail</a>, <a href="http://twitter.com/mczub">Twitter</a>, and <a href="http://facebook.com/mczub">Facebook</a>.</p>
+                <p>By day, I develop test automation for Xero in San Francisco. I have a <a href="#resume">broad skillset</a> with experience in software development, mixed-signal ASIC design, systems engineering, and circuit design and test.</p>
+                <p>By night, I <a href="#projects">experiment</a> with web design, game development, music, and video game livestreaming.</p>
+                <p>Feel free to <a href="#contact">contact</a> me through social media. I'm easiest to get a hold of through <a href="mailto:mczub@mczub.com">e-mail</a>, <a href="http://twitter.com/mczub">Twitter</a>, and <a href="http://facebook.com/mczub">Facebook</a>.</p>
             </section>
             <section id="resume" class="content">
                 <div class='content-header'>Resume</div>
@@ -163,3 +156,13 @@
     </div>
 </body>
 <script src="./script/background.js"></script>
+<script>
+$("a[href^='#']").on('click', function(e){
+    e.preventDefault();
+    console.log('toot');
+    var hash = this.hash;
+    $('html, body').animate({
+        scrollTop: $(hash).offset().top
+    }, 500);
+});
+</script>
