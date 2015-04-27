@@ -28,6 +28,24 @@ a
 	position:fixed;
 	text-transform:uppercase;
 }
+.smalllogo
+{
+	width:100%;
+	top:0;
+	padding-left:20px;
+	padding-right:20px;
+	font-size:2em;
+	position:fixed;
+	text-transform:lowercase;
+	background-color:rgba(0,0,0,1);
+	z-index:10;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 .biglogo
 {
 	width:400px;
@@ -72,7 +90,7 @@ hr.logo-line
 {
 	/*font-family: 'Oxygen Mono';*/
 	text-transform: lowercase;
-	font-size: 16px;
+	font-size: 1.5em;
 	color:rgba(240,240,240,1);
 	padding-top:40px;
 }
@@ -97,7 +115,7 @@ section
 .content
 {
 	padding-top:40px;
-	font-size:18px;
+	font-size:1.5em;
 }
 .resume-section
 {
@@ -125,7 +143,7 @@ list-style-type: none;
 	position:absolute;
 	left:20px;
 	top:20px;
-	font-size:36px;
+	font-size:2.5em;
 }
 .project-url
 {
@@ -136,7 +154,7 @@ list-style-type: none;
 .project-description
 {
 	position:absolute;
-	font-size:24px;
+	font-size:2em;
 	text-align:right;
 	right:20px;
 	top:20px;
@@ -147,4 +165,17 @@ list-style-type: none;
 	text-align:right;
 	right:20px;
 	bottom:20px;
+}
+
+@media (max-width: 992px)
+{ 
+	.project-description
+	{
+	position:absolute;
+	font-size:1em;
+	text-align:right;
+	right:20px;
+	top:auto;
+	bottom:20px;
+	}
 }

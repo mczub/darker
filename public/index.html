@@ -42,7 +42,10 @@
 </head>
 <body>
     <section class="intro">
-        <div class="logo biglogo">
+        <div class="logo smalllogo hidden-md hidden-lg">
+            <span class="logo-text-front">m|czub</span>
+        </div>
+        <div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>
             <hr class="logo-line"/>
             <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
@@ -113,20 +116,29 @@
             <section id="projects" class="content">
                 <div class='project-card project-website'>
                     <div class='project-title'>mczub.com</div>
-                    <div class='project-url'><a href='http://mczub.com'>http://mczub.com</a></div>
-                    <div class='project-description'>My personal website</div>
-                    <div class='project-tools'>Express, Node.js, Bootstrap, Azure</div>
+                    <div class='project-url hidden-xs hidden-sm'><a href='http://mczub.com'>http://mczub.com</a></div>
+                    <div class='project-description'>my personal website</div>
+                    <div class='project-tools hidden-xs hidden-sm'>Express, Node.js, Bootstrap, Azure</div>
                 </div>
                 <div class='project-card project-landing'>
                     <div class='project-title'>[X]</div>
-                    <div class='project-url'><a href='http://mczub.com'>http://mczub.com</a></div>
+                    <div class='project-url hidden-xs hidden-sm'><a href='http://mczub.com'>http://mczub.com</a></div>
                     <div class='project-description'>multi-user dynamic landing page</div>
-                    <div class='project-tools'>Express, Socket.IO, HTML5 Canvas</div>
+                    <div class='project-tools hidden-xs hidden-sm'>Express, Socket.IO, HTML5 Canvas</div>
                 </div>
             </section>
             <section id="music" class="content">
-                <p>hurf durf piano!</p>
-                <p>durf hurf violin!</p>
+                <p>I'm a classically trained pianist and violinist with experience playing both solo and in orchestras and ensembles. You can find some of my music on <a href="http://youtube.com/mczub1">YouTube</a>, <a href="http://soundcloud.com/mczub">SoundCloud</a>, or livestreaming on <a href="http://twitch.tv/mczub">Twitch</a>. For performance or collaboration requests, feel free to <a href="#contact">contact me</a>.</p>
+                <div class='media col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2'>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=FLGGUgXwSYQ1ptPeW1Iupv9w"></iframe>
+                    </div> 
+                </div>
+                <div class='media col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2'>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5806112&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+                    </div> 
+                </div>
             </section>
             <section id="contact" class="content">
                 <p>twitter</p>
