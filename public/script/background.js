@@ -20,7 +20,7 @@ setBackground();
 socket = io.connect();
 
 socket.on('state', function(data){
-	console.log(data)
+	//console.log(data)
 	styleArray = data;
 	redraw();
 })

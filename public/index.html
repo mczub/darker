@@ -17,15 +17,15 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     $(document).ready(function(){
-        var vh = $(window).height()/window.devicePixelRatio;
+        var vh = $(window).height();
         var navh = $(".nav").height() + 60;
-        console.log(vh-navh);
+        console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
         $(".biglogo").width($(".col-md-4").width());
     });
     $(window).resize(function() {
         $(".nav").unstick();
-        var vh = $(window).height()/window.devicePixelRatio;
+        var vh = $(window).height();
         var navh = $(".nav").height() + 60;
         $(".nav").sticky({topSpacing:(vh-navh)});
     });
@@ -50,7 +50,7 @@
     </section>
     <div class="container-fluid">
     <div class="row">
-        <div class="col-md-4 nav-container">
+        <div class="col-md-4 nav-container hidden-xs hidden-sm">
             <ul class="nav nav-stacked">
                 <li role="presentation" class="active"><a href="#about">About</a></li>
                 <li role="presentation"><a href="#resume">Resume</a></li>
@@ -68,12 +68,61 @@
                 <p>Feel free to <a href="#connect" class="skip" gumby-update gumby-duration="600" gumby-offset="-60" gumby-goto="[data-target='connect']">connect</a> with me through social media. I'm easiest to get a hold of through <a href="mailto:mczub@mczub.com">e-mail</a>, <a href="http://twitter.com/mczub">Twitter</a>, and <a href="http://facebook.com/mczub">Facebook</a>.</p>
             </section>
             <section id="resume" class="content">
-                <p>hurf durf resume!</p>
-                <p>durf hurf university</p>
+                <p>For a more detailed resume or specific job-related inquiries, please <a style="display:inline" href="#contact">contact me directly</a>.</p>
+                <div class='resume-education resume-section'>
+                    <div class='resume-heading col-md-2'>Education</div>
+                    <div class='resume-content col-md-10'>California Institute of Technology, BS, Electrical Engineering, Class of 2009</div>
+                </div>
+                <div class='resume-skills resume-section'>
+                    <div class='resume-heading col-md-2'>Skills</div>
+                    <div class='resume-content col-md-10'>
+                        <div>Software
+                            <ul>
+                                <li>C#, JavaScript, Python, C++, CSS</li>
+                                <li>Selenium WebDriver, XPath, Gatling, Express, Node, SQL</li>
+                                <li>Git, Github, NuGet, NPM, TeamCity</li>
+                            </ul>
+                        </div>
+                        <div>Hardware
+                            <ul>
+                                <li>Mixed-signal integrated circuit design and layout, including Cadence tools</li>
+                                <li>Solid-state and thin film fabrication and testing methods, including wafer bonding, photolithography, and SEM</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class='resume-work resume-section'>
+                    <div class='resume-heading col-md-2'>Work Experience</div>
+                    <div class='resume-content col-md-10'>
+                        <div>Quality Engineer, Xero, 2014-Current
+                            <ul>
+                                <li>Architected and maintained front-end automated test framework using C#, Selenium, and SpecFlow</li>
+                                <li>Contributed to back-end automated test framework using Scala and Gatling</li>
+                                <li>Developed an at-a-glance web dashboard to display test environment status</li>
+                                <li>Trained QA to write automated front-end and back-end tests</li>
+                            </ul>
+                        </div>
+                        <div>Raytheon Space and Airborne Systems, Electrical Engineer, 2009-2014
+                            <ul>
+                                <li>Designed, tested, and validated electronic systems at module, PCB, and circuit levels</li>
+                                <li>Performed test systems design, including both hardware and software</li>
+                                <li>Designed and implemented digital and analog blocks in multiple mixed-signal ASICs with first-pass success in submicron processes using Cadence tools</li>
+                    </div>
+                </div>
             </section>
             <section id="projects" class="content">
-                <p>hurf durf projects!</p>
-                <p>durf hurf stuff i made</p>
+                <div class='project-card project-website'>
+                    <div class='project-title'>mczub.com</div>
+                    <div class='project-url'><a href='http://mczub.com'>http://mczub.com</a></div>
+                    <div class='project-description'>My personal website</div>
+                    <div class='project-tools'>Express, Node.js, Bootstrap, Azure</div>
+                </div>
+                <div class='project-card project-landing'>
+                    <div class='project-title'>[X]</div>
+                    <div class='project-url'><a href='http://mczub.com'>http://mczub.com</a></div>
+                    <div class='project-description'>multi-user dynamic landing page</div>
+                    <div class='project-tools'>Express, Socket.IO, HTML5 Canvas</div>
+                </div>
             </section>
             <section id="music" class="content">
                 <p>hurf durf piano!</p>
