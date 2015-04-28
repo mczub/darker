@@ -2,7 +2,7 @@ var WIDTH = 1600;
 var HEIGHT = 1600;
 var NUM_X = 8;
 var NUM_Y = 8;
-var canvas = document.createElement('canvas');
+var canvas = document.getElementById('x-canvas');
 canvas.width = WIDTH;
 canvas.height = HEIGHT;
 var ctx = canvas.getContext("2d");
@@ -146,7 +146,7 @@ function setBackground()
 	var img = new Image();
 	img.onload = function()
 	{
-		document.getElementsByClassName("intro")[0].style.background = "url(" + img.src + ") no-repeat 50% 50%";
+		//document.getElementsByClassName("intro")[0].style.background = "url(" + img.src + ") no-repeat 50% 50%";
 	};
 	img.src = url;
 	//document.getElementsByClassName("intro")[0].style.background = "url('../grass.jpg') no-repeat 50% 50%";
