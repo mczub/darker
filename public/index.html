@@ -22,6 +22,7 @@
         console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
         //$(".biglogo").width($(".col-md-4").width());
+        var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600)
     });
     $(window).resize(function() {
         $(".nav").unstick();
@@ -156,7 +157,7 @@
     </div>
     </div>
 </body>
-<script src="./script/background.js"></script>
+<script src="./script/xbackground.js"></script>
 <script>
 $("a[href^='#']").on('click', function(e){
     e.preventDefault();
