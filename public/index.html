@@ -23,6 +23,7 @@
         $(".nav").sticky({topSpacing:(vh-navh)});
         //$(".biglogo").width($(".col-md-4").width());
         var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600)
+        //var bg = new HexBG(document.getElementById('x-canvas'), 1600, 1600)
     });
     $(window).resize(function() {
         $(".nav").unstick();
@@ -158,6 +159,7 @@
     </div>
 </body>
 <script src="./script/xbackground.js"></script>
+<script src="./script/hexBG.js"></script>
 <script>
 $("a[href^='#']").on('click', function(e){
     e.preventDefault();
