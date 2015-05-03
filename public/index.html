@@ -22,8 +22,8 @@
         console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
         //$(".biglogo").width($(".col-md-4").width());
-        var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600)
-        //var bg = new HexBG(document.getElementById('x-canvas'), 1600, 1600)
+        //var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600)
+        var bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
     });
     $(window).resize(function() {
         $(".nav").unstick();
@@ -37,6 +37,7 @@
 <body>
     <div id="top"></div>
     <section class="intro">
+        <canvas id='x-canvas-bg'></canvas>
         <canvas id='x-canvas'></canvas>
         <div class="logo smalllogo hidden-md hidden-lg">
             <span class="logo-text-front">mczub.com</span>
