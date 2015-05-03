@@ -22,9 +22,15 @@ function XBackground(canv, width, height){
 	socket = io.connect();
 	
 	socket.on('state', function(data){
-		//console.log(data)
+		console.log(data)
 		styleArray = data;
 		redraw();
+	})
+	
+	socket.on('click', function(data){
+		console.log(data)
+		//styleArray = data;
+		increment(data[0], data[1], false)
 	})
 	
 	function close(){
@@ -75,7 +81,7 @@ for (var i = 0; i < NUM_X; i++)
 		var x_unit = Math.floor(canv_x_pos / (WIDTH / NUM_X));
 		var y_unit = Math.floor(canv_y_pos / (HEIGHT / NUM_Y));
 		//console.log(x_unit + "," + y_unit);
-		increment(x_unit,y_unit);
+		increment(x_unit,y_unit, true);
 	}, false);
 	
 	function drawXGlyph(x_pos, y_pos)
@@ -160,7 +166,7 @@ for (var i = 0; i < NUM_X; i++)
 		//console.log($("section.intro").css("background-image"));
 	}
 	
-	function increment(x_pos,y_pos)
+	function increment(x_pos,y_pos,emit)
 	{
 		//console.log(styleArray);
 
@@ -171,7 +177,9 @@ for (var i = 0; i < NUM_X; i++)
 			styleArray[x_pos][y_pos]++;
 			styleArray[x_pos][y_pos] %= textures.length;
 			redraw();
-			socket.emit('click',new Array(x_pos, y_pos));
+			if (emit == true){
+				 socket.emit('click', [x_pos, y_pos]);
+			}
 		}
 	}
 }

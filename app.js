@@ -18,8 +18,8 @@ for (var i = 0; i < NUM_X; i++)
 console.log('started')
 
 app.io.route('connected', function(req){
-	console.log(styleArray);
-	app.io.broadcast('state', styleArray);
+	//console.log(styleArray);
+	req.io.emit('state', styleArray);
 })
 
 app.io.route('click', function(req){
@@ -28,7 +28,7 @@ app.io.route('click', function(req){
 	var y = req.data[1];
 	styleArray[x][y]++
 	styleArray[x][y] %= NUM_TEXTURES;
-	app.io.broadcast('state', styleArray);
+	req.io.broadcast('click', req.data);
 })
 
 /*app.get('/', function(req, res) {
