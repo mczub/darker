@@ -77,8 +77,12 @@ a:active {
 .fp-picker
 {
 	width:auto;
-	height:60px;
+	height:80px;
 	top:120px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-top:10px;
+	padding-bottom:10px;
 	font-size:2em;
 	position:absolute;
 	display:inline-block;
