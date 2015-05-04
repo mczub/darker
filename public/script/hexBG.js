@@ -23,7 +23,7 @@ function HexBG(canv, bgcanv, width, height){
 	var radialHex;
 	var curRadFill = 0;
 	var freezeMouseHex = false;
-	var fillColor = "0,0,255"
+	var fillColor = "122, 82, 204"
 	for (var i = 0; i < num_x + 1; i++)
 	{
 		centers[i] = [];
@@ -123,7 +123,35 @@ function HexBG(canv, bgcanv, width, height){
 		radialReqId = requestAnimationFrame(radialFill)
 	}, false);
 	
+	elem.addEventListener('touchstart', function(event)
+	{
+		event.preventDefault();
+		freezeMouseHex = true;
+		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
+		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
+		
+		radialHex = getHex(canv_x_pos,canv_y_pos);
+		drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
+		radialCenter = centers[radialHex[0]][radialHex[1]]
+		radialReqId = requestAnimationFrame(radialFill)
+	}, false);
+	
 	elem.addEventListener('mouseup', function(event)
+	{
+		
+		freezeMouseHex = false;
+		//console.log(event.pageX + "," + event.pageY);
+		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
+		cancelAnimationFrame(radialReqId);
+		ctx.globalCompositeOperation = 'source-over';
+		var hex = getHex(radialCenter.x,radialCenter.y);
+		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
+		curRadFill = 0;
+	}, false);
+	
+	elem.addEventListener('touchend', function(event)
 	{
 		
 		freezeMouseHex = false;
@@ -174,9 +202,9 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(radialCenter)
 		if (curRadFill < 2) curRadFill += 0.02;
 		ctx.moveTo(radialCenter.x,radialCenter.y)
-		ctx.arc(radialCenter.x, radialCenter.y, SIZE*2, -Math.PI/2, curRadFill * Math.PI - Math.PI/2, false);
+		ctx.arc(radialCenter.x, radialCenter.y, SIZE*2, -Math.PI/2, Math.floor(curRadFill * 3) * 1/3 * Math.PI - Math.PI/2, false);
 		ctx.closePath();
-		ctx.fillStyle = "rgba(0,0,0,0.3)";
+		ctx.fillStyle = "rgba(0,0,0,0.5)";
 		ctx.fill();
 		drawHex(ctx, radialHex[0], radialHex[1], "rgba(0,0,0,0)", "rgba(0,0,0,1)", 4, SIZE*1.3);
 		//ctx.fillRect(radialCenter.x,radialCenter.y,2,2);
@@ -218,12 +246,12 @@ function HexBG(canv, bgcanv, width, height){
 				if (j > num_y) continue;
 				var opacity = [
 					[1],
-					[1,0.5],
-					[1,0.7,0.3],
-					[1,0.8,0.6,0.2],
-					[1,1,0.8,0.5,0.2],
-					[1,1,0.8,0.8,0.5,0.2],
-					[1,1,0.8,0.6,0.4,0.2,0.1]
+					[1,0.8],
+					[1,0.9,0.8],
+					[1,0.9,0.8,0.6],
+					[1,0.9,0.8,0.7,0.6],
+					[1,1,0.9,0.8,0.7,0.6],
+					[1,1,0.9,0.9,0.8,0.7,0.6]
 				]
 				var fill = "rgba(" + fillColor + "," + opacity[rad_hexes][distance] + ")"
 				console.log(rad_hexes, distance, fill)
