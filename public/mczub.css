@@ -78,7 +78,7 @@ a:active {
 {
 	width:auto;
 	height:60px;
-	top:60px;
+	top:120px;
 	font-size:2em;
 	position:absolute;
 	display:inline-block;
@@ -118,7 +118,7 @@ a:active {
 .biglogo
 {
 	width:350px;
-	top:20%;
+	top:20px;
 	padding-left:20px;
 	padding-right:20px;
 	font-size:2em;
