@@ -18,7 +18,7 @@ for (var i = 0; i < NUM_X; i++)
 console.log('started')
 
 app.io.route('connected', function(req){
-	//console.log(styleArray);
+	console.log('client connected');
 	req.io.emit('state', styleArray);
 })
 
@@ -29,6 +29,16 @@ app.io.route('click', function(req){
 	styleArray[x][y]++
 	styleArray[x][y] %= NUM_TEXTURES;
 	req.io.broadcast('click', req.data);
+})
+
+app.io.route('redraw', function(req){
+	console.log('redraw');
+	req.io.emit('state', styleArray);
+})
+
+app.io.route('disconnected', function(req){
+	console.log('client disconnected');
+	//req.io.emit('state', styleArray);
 })
 
 /*app.get('/', function(req, res) {

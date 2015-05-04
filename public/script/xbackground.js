@@ -1,4 +1,4 @@
-function XBackground(canv, width, height){
+function XBackground(canv, width, height, socket){
 	var WIDTH = width;
 	var HEIGHT = height;
 	var NUM_X = 8;
@@ -18,24 +18,31 @@ function XBackground(canv, width, height){
 	var styleArray = new Array();
 	drawGlyphMask();
 	setBackground();
+	//console.log(ctx)
+	//socket.emit('redraw');
 	
-	socket = io.connect();
-	
-	socket.on('state', function(data){
-		console.log(data)
+	function onSocketState(data)
+	{
 		styleArray = data;
 		redraw();
-	})
+	}
 	
-	socket.on('click', function(data){
-		console.log(data)
-		//styleArray = data;
+	function onSocketClick(data)
+	{
 		increment(data[0], data[1], false)
-	})
+	}
+	socket.on('state', onSocketState)
+	socket.on('click', onSocketClick)
 	
-	function close(){
+	XBackground.prototype.close = function(){
+		ctx.clearRect(0,0,WIDTH,HEIGHT);
+		var elem = document.getElementsByClassName("intro")[0];
+		elem.removeEventListener('click', onClick);
 		canvas = null;
-		socket = io.disconnect();
+		ctx = null;
+		//socket.disconnect();
+		socket.removeListener('state', onSocketState)
+		socket.removeListener('click', onSocketClick)
 	}
 
 /*var styleArray = new Array();
@@ -50,9 +57,11 @@ for (var i = 0; i < NUM_X; i++)
 	function checkAllTexturesLoaded()
 	{
 		texturesReady++;
+		//console.log(texturesReady)
 		if (texturesReady >= textures.length)
 		{
-			socket.emit('connected');
+			//console.log('redraw');
+			socket.emit('redraw');
 			drawGlyphMask();
 			//drawImages();
 			//setBackground();
@@ -62,18 +71,13 @@ for (var i = 0; i < NUM_X; i++)
 	
 	for(var i = 0; i < textures.length; i++)
 	{
-		textures[i].onload = function() {
-			checkAllTexturesLoaded();
-		}
+		textures[i].onload = checkAllTexturesLoaded;
 	}
 	textures[0].src = "./white.jpg";
 	textures[1].src = "./darkgray.jpg";
 	textures[2].src = "./brick.jpg";
 	textures[3].src = "./grass.jpg";
-	
-	var elem = document.getElementsByClassName("intro")[0];
-	elem.addEventListener('click', function(event)
-	{
+	function onClick(event){
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
@@ -82,7 +86,9 @@ for (var i = 0; i < NUM_X; i++)
 		var y_unit = Math.floor(canv_y_pos / (HEIGHT / NUM_Y));
 		//console.log(x_unit + "," + y_unit);
 		increment(x_unit,y_unit, true);
-	}, false);
+	}
+	var elem = document.getElementsByClassName("intro")[0];
+	elem.addEventListener('click', onClick, false);
 	
 	function drawXGlyph(x_pos, y_pos)
 	{

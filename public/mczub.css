@@ -74,6 +74,47 @@ a:active {
     -ms-user-select: none;
     user-select: none;
 }
+.fp-picker
+{
+	width:auto;
+	height:60px;
+	top:60px;
+	font-size:2em;
+	position:absolute;
+	display:inline-block;
+	text-transform:lowercase;
+	background-color:rgba(0,0,0,0.6);
+	z-index:10;
+}
+.fp-x
+{
+	background-image:url('x_nav.png');
+}
+.fp-hex
+{
+	background-image:url('hex_nav.png');
+}
+.fp-item
+{
+	display:inline;
+	float:left;
+	background-size:contain;
+	border-style:solid;
+	border-width:5px;
+	border-color:rgba(0,0,0,0);
+	width:60px;
+	height:60px;
+	z-index:10;
+}
+
+.fp-item:hover
+{
+	border-color: rgba(255,255,255,0.3);
+}
+.fp-item.active
+{
+	border-color: rgba(255,255,255,1);
+}
 .biglogo
 {
 	width:350px;
@@ -181,6 +222,24 @@ list-style-type: none;
 	left:20px;
 	top:20px;
 	font-size:2em;
+}
+.project-x
+{
+	position:absolute;
+	background-size:contain;
+	display:block;
+	height:60px;
+	width:60px;
+	background-image:url('x_nav.png');
+}
+.project-hex
+{
+	position:absolute;
+	background-size:contain;
+	display:block;
+	height:60px;
+	width:60px;
+	background-image:url('hex_nav.png');
 }
 .project-url
 {

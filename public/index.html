@@ -22,8 +22,27 @@
         console.log(vh);
         $(".nav").sticky({topSpacing:(vh-navh)});
         //$(".biglogo").width($(".col-md-4").width());
-        //var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600)
-        var bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
+        var socket = io.connect();
+        var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600, socket)
+        //bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
+        $('.fp-x').addClass("active");
+        
+        $( '.fp-x' ).on('click', function() {
+            if (!$(this).hasClass("active")){
+                 $('.fp-hex').removeClass("active");
+                 $('.fp-x').addClass("active");
+                 bg.close();
+                 bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600, socket)
+            }
+        });
+        $( '.fp-hex' ).on('click', function() {
+            if (!$(this).hasClass("active")){
+                 $('.fp-x').removeClass("active");
+                 $('.fp-hex').addClass("active");
+                 bg.close();
+                 bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
+            }
+        });
     });
     $(window).resize(function() {
         $(".nav").unstick();
@@ -31,6 +50,8 @@
         var navh = $(".nav").height() + 60;
         $(".nav").sticky({topSpacing:(vh-navh)});
     });
+    
+    
 </script>
 <head>
 </head>
@@ -41,6 +62,10 @@
         <canvas id='x-canvas'></canvas>
         <div class="logo smalllogo hidden-md hidden-lg">
             <span class="logo-text-front">mczub.com</span>
+        </div>
+        <div class="fp-picker  hidden-xs hidden-sm">
+            <span class='fp-x fp-item'></span>
+            <span class='fp-hex fp-item'></span>
         </div>
         <a href="#top"><div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>
@@ -123,10 +148,16 @@
                     <div class='project-tools hidden-xs hidden-sm'>Express, Node.js, Bootstrap, Azure</div>
                 </div></a>
                 <a href="http://mczub.com"><div class='project-card project-landing'>
-                    <div class='project-title'>[X]</div>
+                    <div class='project-title'><span class='project-x'></span></div>
                     <div class='project-url hidden-xs hidden-sm'>http://mczub.com</div>
                     <div class='project-description'>multi-user dynamic landing page</div>
                     <div class='project-tools hidden-xs hidden-sm'>Express, Socket.IO, HTML5 Canvas</div>
+                </div></a>
+                <a href="http://mczub.com"><div class='project-card project-landing'>
+                    <div class='project-title'><span class='project-hex'></span></div>
+                    <div class='project-url hidden-xs hidden-sm'>http://mczub.com</div>
+                    <div class='project-description'>canvas-based drawing app</div>
+                    <div class='project-tools hidden-xs hidden-sm'>Javascript, HTML5 Canvas</div>
                 </div></a>
             </section>
             <section id="music" class="content">

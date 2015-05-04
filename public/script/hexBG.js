@@ -37,18 +37,20 @@ function HexBG(canv, bgcanv, width, height){
 		}
 	}
 	drawHexes();
-	socket = io.connect();
-	
-	socket.on('state', function(data){
-		//console.log(data)
-		styleArray = data;
-		redraw();
-	})
-	
-	function close(){
+	//var socket = io.connect();
+		
+	HexBG.prototype.close = function(){
+		ctx.clearRect(0,0,WIDTH,HEIGHT);
+		bgctx.clearRect(0,0,WIDTH,HEIGHT);
+		var elem = document.getElementsByClassName("intro")[0];
+		elem.removeEventListener('mousemove', onMouseMove);
+		elem.removeEventListener('mousedown', onMouseDown);
+		elem.removeEventListener('mouseup', onMouseUp);
 		canvas = null;
+		ctx = null;
 		bgcanvas = null;
-		socket = io.disconnect();
+		bgctx = null;
+		//socket.disconnect();
 	}
 
 	function drawHexes()
@@ -86,10 +88,7 @@ function HexBG(canv, bgcanv, width, height){
 	{
 		ctx.clearRect(0,0,WIDTH, HEIGHT);
 	}
-	
-	var elem = document.getElementsByClassName("intro")[0];
-	
-	elem.addEventListener('mousemove', function(event)
+	function onMouseMove(event)
 	{
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
@@ -105,10 +104,9 @@ function HexBG(canv, bgcanv, width, height){
 		var hex = getHex(canv_x_pos,canv_y_pos);
 		//console.log(hex);
 		drawHex(ctx, hex[0], hex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*1.3);
-	}, false);
+	}
 	
-	elem.addEventListener('mousedown', function(event)
-	{
+	function onMouseDown(event){
 		freezeMouseHex = true;
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
@@ -121,36 +119,53 @@ function HexBG(canv, bgcanv, width, height){
 		drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*1.3);
 		radialCenter = centers[radialHex[0]][radialHex[1]]
 		radialReqId = requestAnimationFrame(radialFill)
-	}, false);
+	}
 	
-	elem.addEventListener('touchstart', function(event)
+	function onMouseUp(event)
 	{
-		event.preventDefault();
-		freezeMouseHex = true;
-		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
-		var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
-		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
-		
-		radialHex = getHex(canv_x_pos,canv_y_pos);
-		drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
-		radialCenter = centers[radialHex[0]][radialHex[1]]
-		radialReqId = requestAnimationFrame(radialFill)
-	}, false);
-	
-	elem.addEventListener('mouseup', function(event)
-	{
-		
 		freezeMouseHex = false;
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		cancelAnimationFrame(radialReqId);
 		ctx.globalCompositeOperation = 'source-over';
+		if (radialCenter.x < 0 || radialCenter.x > WIDTH) return;
+		if (radialCenter.y < 0 || radialCenter.y > HEIGHT) return;
+		
 		var hex = getHex(radialCenter.x,radialCenter.y);
 		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
 		curRadFill = 0;
-	}, false);
+		
+	}
+	var elem = document.getElementsByClassName("intro")[0];
 	
+	elem.addEventListener('mousemove', onMouseMove, false);
+	
+	elem.addEventListener('mousedown', onMouseDown, false);
+	
+	elem.addEventListener('mouseup', onMouseUp, false);
+	
+	/*elem.addEventListener('touchstart', function(event)
+	{
+		elem.addEventListener('touchend', function(e){
+	        freezeMouseHex = true;
+			var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+			var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+			if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
+			if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
+			
+			radialHex = getHex(canv_x_pos,canv_y_pos);
+			drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
+			radialCenter = centers[radialHex[0]][radialHex[1]]
+			radialReqId = requestAnimationFrame(radialFill)
+        	$(this).off('touchend');
+        });
+    //behaviour for move
+   		$(this).on('touchmove', function(e){
+        $(this).off('touchend');
+        });    
+		
+	}, false);
+
 	elem.addEventListener('touchend', function(event)
 	{
 		
@@ -162,7 +177,7 @@ function HexBG(canv, bgcanv, width, height){
 		var hex = getHex(radialCenter.x,radialCenter.y);
 		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
 		curRadFill = 0;
-	}, false);
+	}, false);*/
 	
 	function getHex(xpos, ypos)
 	{
@@ -254,7 +269,7 @@ function HexBG(canv, bgcanv, width, height){
 					[1,1,0.9,0.9,0.8,0.7,0.6]
 				]
 				var fill = "rgba(" + fillColor + "," + opacity[rad_hexes][distance] + ")"
-				console.log(rad_hexes, distance, fill)
+				//console.log(rad_hexes, distance, fill)
 				drawHex(bgctx, i, j, fill, "rgba(0,0,0,1)", 1, SIZE)
 			}
 		}
