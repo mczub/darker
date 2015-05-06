@@ -73,71 +73,105 @@ a:active {
     -ms-user-select: none;
     user-select: none;
 }
-.fp-picker
+.color-picker
 {
-	width:auto;
-	height:80px;
-	top:120px;
-	padding-left:20px;
-	padding-right:20px;
-	padding-top:10px;
-	padding-bottom:10px;
-	font-size:2em;
-	position:absolute;
-	display:inline-block;
-	text-transform:lowercase;
-	background-color:rgba(0,0,0,0.6);
-	z-index:10;
-}
-
-.hex-view-full
-{
-	width:auto;
+	width:86px;
 	height:auto;
-	top:240px;
+	top:120px;
+	padding:10px;
+	font-size:2em;
+	position:absolute;
+	display:block;
+	text-transform:lowercase;
+	background-color:rgba(0,0,0,0.6);
+	z-index:10;
+}
+.color-picker-mobile
+{
+	width:100%;
+	bottom:0px;
 	padding-left:20px;
 	padding-right:20px;
 	padding-top:10px;
 	padding-bottom:10px;
 	font-size:2em;
-	position:absolute;
+	position:fixed;
 	display:inline-block;
 	text-transform:lowercase;
 	background-color:rgba(0,0,0,0.6);
 	z-index:10;
 }
-.fp-x
+.color-red
 {
-	background-image:url('x_nav.png');
+	background-color:#990000;
 }
-.fp-hex
+.color-blue
 {
-	background-image:url('hex_nav.png');
+	background-color:#000099;
 }
-.fp-item
+.color-purple
 {
-	display:inline;
+	background-color:rgb(122, 82, 204);
+}
+.color-item
+{
+	display:block;
 	float:left;
 	background-size:contain;
 	border-style:solid;
 	border-width:5px;
 	border-color:rgba(0,0,0,0);
+	margin-top:4px;
+	margin-bottom:4px;
+	width:60px;
+	height:60px;
+	z-index:10;
+}
+.color-item.mobile{
+	margin-left:4px;
+	margin-right:4px;
+}
+
+.utility-item
+{
+	display:inline;
+	text-align:center;
+	vertical-align:middle;
+	line-height:50px;
+	float:right;
+	background-size:contain;
+	border-style:solid;
+	border-width:5px;
+	border-color:rgba(0,0,0,0);
+	font-size: 1.2em;
+	color: rgba(255,255,255,1);
+	margin-top:4px;
+	margin-bottom:4px;
 	width:60px;
 	height:60px;
 	z-index:10;
 }
 
-.fp-item:hover
+.utility-item.mobile{
+	margin-left:4px;
+	margin-right:4px;
+}
+.utility-item:hover
 {
 	border-color: rgba(255,255,255,0.3);
 }
-.fp-item.active
+
+.color-item:hover
+{
+	border-color: rgba(255,255,255,0.3);
+}
+.color-item.active
 {
 	border-color: rgba(255,255,255,1);
 }
 .biglogo
 {
-	width:350px;
+	width:200px;
 	top:20px;
 	padding-left:20px;
 	padding-right:20px;

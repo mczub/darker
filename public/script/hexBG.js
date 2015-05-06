@@ -42,7 +42,7 @@ function HexBG(canv, bgcanv, width, height){
 	HexBG.prototype.close = function(){
 		ctx.clearRect(0,0,WIDTH,HEIGHT);
 		bgctx.clearRect(0,0,WIDTH,HEIGHT);
-		var elem = document.getElementsByClassName("intro")[0];
+		var elem = document.getElementById('x-canvas');
 		elem.removeEventListener('mousemove', onMouseMove);
 		elem.removeEventListener('mousedown', onMouseDown);
 		elem.removeEventListener('mouseup', onMouseUp);
@@ -51,6 +51,12 @@ function HexBG(canv, bgcanv, width, height){
 		bgcanvas = null;
 		bgctx = null;
 		//socket.disconnect();
+	}
+	
+	HexBG.prototype.setColor = function(rgbString){
+		//console.log(rgbString, rgbString.substring(4, rgbString.length - 1))
+		fillColor = rgbString.substring(4,rgbString.length - 1);
+		console.log("rgba(" + fillColor + ",1)")
 	}
 
 	function drawHexes()
@@ -89,11 +95,14 @@ function HexBG(canv, bgcanv, width, height){
 		ctx.clearRect(0,0,WIDTH, HEIGHT);
 	}
 	function onMouseMove(event)
-	{
+	{	
+		
 		//console.log(event.pageX + "," + event.pageY);
-		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
-		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
-		var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		//console.log(canvas.getBoundingClientRect().left, canvas.getBoundingClientRect().top);
+		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
+		var canv_y_pos = event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		//var x_unit = Math.floor(canv_x_pos / (WIDTH / NUM_X));
@@ -110,8 +119,10 @@ function HexBG(canv, bgcanv, width, height){
 		freezeMouseHex = true;
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
-		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
-		var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
+		var canv_y_pos = event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
@@ -136,7 +147,7 @@ function HexBG(canv, bgcanv, width, height){
 		curRadFill = 0;
 		
 	}
-	var elem = document.getElementsByClassName("intro")[0];
+	var elem = document.getElementById('x-canvas');
 	
 	elem.addEventListener('mousemove', onMouseMove, false);
 	
@@ -217,7 +228,7 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(radialCenter)
 		if (curRadFill < 2) curRadFill += 0.02;
 		ctx.moveTo(radialCenter.x,radialCenter.y)
-		ctx.arc(radialCenter.x, radialCenter.y, SIZE*2, -Math.PI/2, Math.floor(curRadFill * 3) * 1/3 * Math.PI - Math.PI/2, false);
+		ctx.arc(radialCenter.x, radialCenter.y, SIZE*2, -Math.PI/2, curRadFill * Math.PI - Math.PI/2, false);
 		ctx.closePath();
 		ctx.fillStyle = "rgba(0,0,0,0.5)";
 		ctx.fill();

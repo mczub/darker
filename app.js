@@ -17,6 +17,10 @@ for (var i = 0; i < NUM_X; i++)
 }
 console.log('started')
 
+app.get('/hexdraw', function(req,res){
+	res.sendfile(__dirname + '/public/hexdraw.html');
+})
+
 app.io.route('connected', function(req){
 	console.log('client connected');
 	req.io.emit('state', styleArray);

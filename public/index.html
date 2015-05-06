@@ -26,11 +26,13 @@
         var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600, socket)
         //bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
         $('.fp-x').addClass("active");
+        $('.hex-view-full').addClass("hidden");
         
         $( '.fp-x' ).on('click', function() {
             if (!$(this).hasClass("active")){
                  $('.fp-hex').removeClass("active");
                  $('.fp-x').addClass("active");
+                 $('.hex-view-full').addClass("hidden");
                  bg.close();
                  bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600, socket)
             }
@@ -39,6 +41,7 @@
             if (!$(this).hasClass("active")){
                  $('.fp-x').removeClass("active");
                  $('.fp-hex').addClass("active");
+                 $('.hex-view-full').removeClass("hidden");
                  bg.close();
                  bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
             }
@@ -66,6 +69,9 @@
         <div class="fp-picker  hidden-xs hidden-sm">
             <span class='fp-x fp-item'></span>
             <span class='fp-hex fp-item'></span>
+        </div>
+        <div class='hex-view-full hidden-xs hidden-sm'>
+            <a href='/hexdraw'>view full app ></a>
         </div>
         <a href="#top"><div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>

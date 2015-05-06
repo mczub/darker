@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Latest compiled and minified CSS -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="./hexdraw.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oxygen+Mono' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="./script/jquery.sticky.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.addEventListener("load",function() {
+	// Set a timeout...
+	setTimeout(function(){
+		// Hide the address bar!
+		window.scrollTo(0, 1);
+	}, 0);
+    });
+    $(document).ready(function(){
+        bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
+        $('.color-purple').addClass("active");
+        
+        $( '.color-item' ).on('click', function() {
+            if (!$(this).hasClass("active")){
+                 $(this)
+                    .addClass("active")
+                    .siblings()
+                        .removeClass("active")
+                 var colorstr = $(this).css('background-color');
+                 bg.setColor(colorstr);
+            }
+        });
+        $( '.fa-floppy-o' ).on('click', function() {
+            var data = document.getElementById('x-canvas-bg').toDataURL();
+            var image = new Image();
+            
+            image.onload = function(){
+                window.open(data);
+            }
+            image.src = data;
+            });
+    });
+    
+    
+</script>
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+</head>
+<body>
+    <div id="top"></div>
+    <section class="intro">
+        <canvas id='x-canvas-bg'></canvas>
+        <canvas id='x-canvas'></canvas>
+        <div class="logo smalllogo hidden-md hidden-lg">
+            <span class="logo-text-front">hexdraw</span>
+        </div>
+        <div class="color-picker hidden-xs hidden-sm">
+            <span class='color-red color-item'></span>
+            <span class='color-blue color-item'></span>
+            <span class='color-purple color-item'></span>
+            <span class='fa fa-floppy-o utility-item mobile'></span>
+        </div>
+        <div class="color-picker-mobile hidden-md hidden-lg">
+            <span class='color-red color-item mobile'></span>
+            <span class='color-blue color-item mobile'></span>
+            <span class='color-purple color-item mobile'></span>
+            <span class='fa fa-floppy-o utility-item mobile'></span>
+            <span class='fa fa-undo utility-item mobile'></span>
+        </div>
+        <div class="logo biglogo hidden-xs hidden-sm">
+            <span class="logo-text-front">hexdraw</span>
+        </div></a>
+    </section>
+</body>
+<script src="./script/xbackground.js"></script>
+<script src="./script/hexBG.js"></script>
+<script>
+$("a[href^='#']").on('click', function(e){
+    e.preventDefault();
+    console.log('toot');
+    var hash = this.hash;
+    $('html, body').animate({
+        scrollTop: $(hash).offset().top
+    }, 500);
+});
+</script>
