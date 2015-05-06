@@ -38,15 +38,10 @@
                  bg.setColor(colorstr);
             }
         });
-        $( '.fa-floppy-o' ).on('click', function() {
-            var data = document.getElementById('x-canvas-bg').toDataURL();
-            var image = new Image();
-            
-            image.onload = function(){
-                window.open(data);
-            }
-            image.src = data;
-            });
+        $( '.save-button' ).on('click', function() {
+            var data = document.getElementById('x-canvas-bg').toDataURL("image/png");
+            $(this).attr("href", data);
+        })
     });
     
     
@@ -67,14 +62,13 @@
             <span class='color-red color-item'></span>
             <span class='color-blue color-item'></span>
             <span class='color-purple color-item'></span>
-            <span class='fa fa-floppy-o utility-item mobile'></span>
+            <a class='save-button' target="_blank"><span class='fa fa-floppy-o utility-item mobile'></span></a>
         </div>
         <div class="color-picker-mobile hidden-md hidden-lg">
             <span class='color-red color-item mobile'></span>
             <span class='color-blue color-item mobile'></span>
             <span class='color-purple color-item mobile'></span>
-            <span class='fa fa-floppy-o utility-item mobile'></span>
-            <span class='fa fa-undo utility-item mobile'></span>
+            <a class='save-button' target="_blank"><span class='fa fa-floppy-o utility-item mobile'></span></a>
         </div>
         <div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">hexdraw</span>
