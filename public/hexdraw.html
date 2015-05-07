@@ -16,16 +16,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="./script/jquery.sticky.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://hammerjs.github.io/dist/hammer.js"></script>
 <script>
-    window.addEventListener("load",function() {
-	// Set a timeout...
-	setTimeout(function(){
-		// Hide the address bar!
-		window.scrollTo(0, 1);
-	}, 0);
-    });
     $(document).ready(function(){
         bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
+        
         $('.color-purple').addClass("active");
         
         $( '.color-item' ).on('click', function() {

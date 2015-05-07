@@ -24,6 +24,7 @@ function HexBG(canv, bgcanv, width, height){
 	var curRadFill = 0;
 	var freezeMouseHex = false;
 	var fillColor = "122, 82, 204"
+	
 	for (var i = 0; i < num_x + 1; i++)
 	{
 		centers[i] = [];
@@ -44,8 +45,9 @@ function HexBG(canv, bgcanv, width, height){
 		bgctx.clearRect(0,0,WIDTH,HEIGHT);
 		var elem = document.getElementById('x-canvas');
 		elem.removeEventListener('mousemove', onMouseMove);
-		elem.removeEventListener('mousedown', onMouseDown);
-		elem.removeEventListener('mouseup', onMouseUp);
+		//elem.removeEventListener('mousedown', onMouseDown);
+		//elem.removeEventListener('mouseup', onMouseUp);3
+		hexhammer.destroy();
 		canvas = null;
 		ctx = null;
 		bgcanvas = null;
@@ -117,6 +119,7 @@ function HexBG(canv, bgcanv, width, height){
 	
 	function onMouseDown(event){
 		freezeMouseHex = true;
+		//console.log('mouse down')
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
@@ -135,6 +138,7 @@ function HexBG(canv, bgcanv, width, height){
 	function onMouseUp(event)
 	{
 		freezeMouseHex = false;
+		//console.log('mouse up')
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		cancelAnimationFrame(radialReqId);
@@ -145,50 +149,96 @@ function HexBG(canv, bgcanv, width, height){
 		var hex = getHex(radialCenter.x,radialCenter.y);
 		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
 		curRadFill = 0;
+	}
+	
+	function onTap(event){
+		//console.log('tap')
+		//console.log(event.pageX + "," + event.pageY);
+		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
+		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		var canv_x_pos = event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset;
+		var canv_y_pos = event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset;
+		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
+		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
+		radialHex = getHex(canv_x_pos,canv_y_pos);
+		//drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
+		radialCenter = centers[radialHex[0]][radialHex[1]]
+		var hex = getHex(radialCenter.x,radialCenter.y);
+		explode(0,hex[0],hex[1]);
+	}
+	
+	function onPress(event){
+		if (freezeMouseHex)
+		{
+			clearFG();
+			freezeMouseHex = false;
+			curRadFill = 0;
+			ctx.globalCompositeOperation = 'source-over';
+			return;
+		}
+		freezeMouseHex = true;
+		//console.log('press')
+		//console.log(event.pageX + "," + event.pageY);
+		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
+		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		var canv_x_pos = event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset;
+		console.log(canvas.getBoundingClientRect().left , canvas.getBoundingClientRect().top)
+		var canv_y_pos = event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset;
+		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
+		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
+		
+		radialHex = getHex(canv_x_pos,canv_y_pos);
+		if (event.pointerType == 'touch'){
+			drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
+			radialCenter = centers[radialHex[0]][radialHex[1]]
+			radialReqId = requestAnimationFrame(radialFillMobile)
+		}
+		else{
+			drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*1.3);
+			radialCenter = centers[radialHex[0]][radialHex[1]]
+			radialReqId = requestAnimationFrame(radialFill)
+		}
+		
+		
+
+		
+	}
+	
+	function onPressUp(event)
+	{
+		freezeMouseHex = false;
+		//console.log(event.pageX + "," + event.pageY);
+		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
+		cancelAnimationFrame(radialReqId);
+		console.log('press up')
+		ctx.globalCompositeOperation = 'source-over';
+		if (radialCenter.x < 0 || radialCenter.x > WIDTH) return;
+		if (radialCenter.y < 0 || radialCenter.y > HEIGHT) return;
+		
+		var hex = getHex(radialCenter.x,radialCenter.y);
+		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
+		clearFG();
+		curRadFill = 0;
 	}
 	var elem = document.getElementById('x-canvas');
 	
 	elem.addEventListener('mousemove', onMouseMove, false);
 	
-	elem.addEventListener('mousedown', onMouseDown, false);
+	//elem.addEventListener('mousedown', onMouseDown, false);
 	
-	elem.addEventListener('mouseup', onMouseUp, false);
+	//elem.addEventListener('mouseup', onMouseUp, false);
 	
-	/*elem.addEventListener('touchstart', function(event)
-	{
-		elem.addEventListener('touchend', function(e){
-	        freezeMouseHex = true;
-			var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
-			var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-			if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
-			if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
-			
-			radialHex = getHex(canv_x_pos,canv_y_pos);
-			drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
-			radialCenter = centers[radialHex[0]][radialHex[1]]
-			radialReqId = requestAnimationFrame(radialFill)
-        	$(this).off('touchend');
-        });
-    //behaviour for move
-   		$(this).on('touchmove', function(e){
-        $(this).off('touchend');
-        });    
-		
-	}, false);
+	var hexhammer = new Hammer(elem);
+	hexhammer.get('press').set({ time: 100, threshold: 1000 });
+	hexhammer.get('pan').set({ threshold: 1000 });
 
-	elem.addEventListener('touchend', function(event)
-	{
-		
-		freezeMouseHex = false;
-		//console.log(event.pageX + "," + event.pageY);
-		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
-		cancelAnimationFrame(radialReqId);
-		ctx.globalCompositeOperation = 'source-over';
-		var hex = getHex(radialCenter.x,radialCenter.y);
-		explode(Math.floor(curRadFill*3),hex[0],hex[1]);
-		curRadFill = 0;
-	}, false);*/
+	
+	hexhammer.on('tap', onTap);
+	hexhammer.on('press', onPress);
+	hexhammer.on('pressup', onPressUp);
 	
 	function getHex(xpos, ypos)
 	{
@@ -237,6 +287,23 @@ function HexBG(canv, bgcanv, width, height){
 		radialReqId = requestAnimationFrame(radialFill)
 	}
 	
+	function radialFillMobile(time)
+	{
+		ctx.globalCompositeOperation = 'source-atop';
+		drawHex(ctx, radialHex[0], radialHex[1], "rgba(" + fillColor + ",1)", "rgba(0,0,0,1)", 4, SIZE*2);
+		ctx.beginPath();
+		//console.log(radialCenter)
+		if (curRadFill < 2) curRadFill += 0.02;
+		ctx.moveTo(radialCenter.x,radialCenter.y)
+		ctx.arc(radialCenter.x, radialCenter.y, SIZE*2, -Math.PI/2, curRadFill * Math.PI - Math.PI/2, false);
+		ctx.closePath();
+		ctx.fillStyle = "rgba(0,0,0,0.5)";
+		ctx.fill();
+		drawHex(ctx, radialHex[0], radialHex[1], "rgba(0,0,0,0)", "rgba(0,0,0,1)", 4, SIZE*2);
+		//ctx.fillRect(radialCenter.x,radialCenter.y,2,2);
+		radialReqId = requestAnimationFrame(radialFillMobile)
+	}
+	
 	function distance(x1, y1, x2, y2)
 	{
 		return Math.sqrt(Math.pow((x2 - x1),2) + Math.pow((y2 - y1),2));
@@ -251,7 +318,7 @@ function HexBG(canv, bgcanv, width, height){
 		var xx = x - (y - (y&1)) / 2;
 		var zz = y;
 		var yy = -xx-zz;
-		console.log(xx,yy,zz, rad_hexes)
+		//console.log(xx,yy,zz, rad_hexes)
 		var results = []
 		for (var dx = -(rad_hexes); dx <= rad_hexes; dx++)
 		{
