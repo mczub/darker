@@ -58,7 +58,7 @@ function HexBG(canv, bgcanv, width, height){
 	HexBG.prototype.setColor = function(rgbString){
 		//console.log(rgbString, rgbString.substring(4, rgbString.length - 1))
 		fillColor = rgbString.substring(4,rgbString.length - 1);
-		console.log("rgba(" + fillColor + ",1)")
+		//console.log("rgba(" + fillColor + ",1)")
 	}
 
 	function drawHexes()
@@ -100,7 +100,7 @@ function HexBG(canv, bgcanv, width, height){
 	{	
 		
 		//console.log(event.pageX + "," + event.pageY);
-		//console.log(canvas.getBoundingClientRect().left, canvas.getBoundingClientRect().top);
+		console.log(canvas.getBoundingClientRect().left, canvas.getBoundingClientRect().top);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
 		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
@@ -152,7 +152,16 @@ function HexBG(canv, bgcanv, width, height){
 	}
 	
 	function onTap(event){
-		//console.log('tap')
+		console.log('tap')
+		if (freezeMouseHex)
+		{
+			cancelAnimationFrame(radialReqId);
+			clearFG();
+			freezeMouseHex = false;
+			curRadFill = 0;
+			ctx.globalCompositeOperation = 'source-over';
+			return;
+		}
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
@@ -172,20 +181,22 @@ function HexBG(canv, bgcanv, width, height){
 	function onPress(event){
 		if (freezeMouseHex)
 		{
+			cancelAnimationFrame(radialReqId);
 			clearFG();
 			freezeMouseHex = false;
 			curRadFill = 0;
+			
 			ctx.globalCompositeOperation = 'source-over';
 			return;
 		}
 		freezeMouseHex = true;
-		//console.log('press')
+		console.log('press')
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
 		var canv_x_pos = event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset;
-		console.log(canvas.getBoundingClientRect().left , canvas.getBoundingClientRect().top)
+		//console.log(canvas.getBoundingClientRect().left , canvas.getBoundingClientRect().top)
 		var canv_y_pos = event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
@@ -232,8 +243,11 @@ function HexBG(canv, bgcanv, width, height){
 	//elem.addEventListener('mouseup', onMouseUp, false);
 	
 	var hexhammer = new Hammer(elem);
-	hexhammer.get('press').set({ time: 100, threshold: 1000 });
-	hexhammer.get('pan').set({ threshold: 1000 });
+	hexhammer.off('pan');
+	hexhammer.off('swipe');
+	hexhammer.get('press').set({ time: 250, threshold: 999999 });
+	hexhammer.get('pan').set({ threshold: 999999 });
+	hexhammer.get('swipe').set({ threshold: 999999 });
 
 	
 	hexhammer.on('tap', onTap);
