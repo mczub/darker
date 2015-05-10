@@ -17,7 +17,10 @@
 <script src="./script/jquery.sticky.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://hammerjs.github.io/dist/hammer.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.7.0/spectrum.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.6.1/spectrum.min.css">
 <script>
+    
     $(document).ready(function(){
         zoomFactor = 1.0
         bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
@@ -47,12 +50,37 @@
                         .removeClass("active")
                  var colorstr = $(this).css('background-color');
                  bg.setColor(colorstr);
+                 console.log(colorstr);
             }
         });
         $( '.save-button' ).on('click', function() {
             var data = bg.getURL
             $(this).attr("href", data);
-        })
+        });
+        $(".color-select").spectrum({
+            color: "#000",
+            showPaletteOnly: true,
+            hideAfterPaletteSelect:true,
+            palette: [["#000000", "#434343", "#666666", "#999999", "#b7b7b7", "#cccccc", "#d9d9d9", "#efefef", "#f3f3f3", "#ffffff"],
+                ["#980000", "#ff0000", "#ff9900", "#ffff00", "#00ff00", "#00ffff", "#4a86e8", "#0000ff", "#9900ff", "#ff00ff"],
+                ["#e6b8af", "#f4cccc", "#fce5cd", "#fff2cc", "#d9ead3", "#d9ead3", "#c9daf8", "#cfe2f3", "#d9d2e9", "#ead1dc"],
+                ["#dd7e6b", "#ea9999", "#f9cb9c", "#ffe599", "#b6d7a8", "#a2c4c9", "#a4c2f4", "#9fc5e8", "#b4a7d6", "#d5a6bd"],
+                ["#cc4125", "#e06666", "#f6b26b", "#ffd966", "#93c47d", "#76a5af", "#6d9eeb", "#6fa8dc", "#8e7cc3", "#c27ba0"],
+                ["#a61c00", "#cc0000", "#e69138", "#f1c232", "#6aa84f", "#45818e", "#3c78d8", "#3d85c6", "#674ea7", "#a64d79"],
+                ["#85200c", "#990000", "#b45f06", "#bf9000", "#38761d", "#134f5c", "#1155cc", "#0b5394", "#351c75", "#741b47"],
+                ["#5b0f00", "#660000", "#783f04", "#7f6000", "#274e13", "#0c343d", "#1c4587", "#073763", "#20124d", "#4c1130"]],
+            change: function(color)
+            {
+                $(".color-custom").css('background-color', color.toRgbString());
+                if (!$(".color-custom").hasClass("active")){
+                 $(".color-custom")
+                    .addClass("active")
+                    .siblings()
+                        .removeClass("active")
+                }
+                bg.setColor(color.toRgbString());
+            }
+        });
     });
     
     
@@ -73,6 +101,7 @@
             <span class='color-red color-item'></span>
             <span class='color-blue color-item'></span>
             <span class='color-purple color-item'></span>
+            <span class='color-custom color-item'><i class='color-select fa fa-caret-down'></i></span>
             <a class='save-button' target="_blank"><span class='fa fa-floppy-o utility-item'></span></a>
         </div>
         <div class="color-picker-mobile hidden-md hidden-lg">

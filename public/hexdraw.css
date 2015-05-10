@@ -115,6 +115,21 @@ a:active {
 {
 	background-color:rgb(122, 82, 204);
 }
+.color-select
+{
+	position:absolute;
+	right:21px;
+	text-align:center;
+	line-height: 50px;
+	font-size: 0.5em;
+	height:50px;
+	width:12px;
+	float:right;
+	background-color:rgba(150,150,150,1);
+}
+.color-select:hover{
+	background-color:rgba(255,255,255,1);
+}
 .color-item
 {
 	display:block;

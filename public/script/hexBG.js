@@ -55,14 +55,11 @@ function HexBG(canv, bgcanv, width, height){
 		bgctx.clearRect(0,0,WIDTH,HEIGHT);
 		var elem = document.getElementById('x-canvas');
 		elem.removeEventListener('mousemove', onMouseMove);
-		//elem.removeEventListener('mousedown', onMouseDown);
-		//elem.removeEventListener('mouseup', onMouseUp);3
 		hexhammer.destroy();
 		canvas = null;
 		ctx = null;
 		bgcanvas = null;
 		bgctx = null;
-		//socket.disconnect();
 	}
 	
 	HexBG.prototype.setColor = function(rgbString){
@@ -90,8 +87,6 @@ function HexBG(canv, bgcanv, width, height){
 		//bgctx.globalCompositeOperation = 'source-atop';
 		//drawHexes();
 		drawBGtoScreen();
-		//bgctx.globalCompositeOperation = 'source-over';
-		
 	}
 	
 	HexBG.prototype.getURL = function(){
