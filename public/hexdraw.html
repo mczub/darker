@@ -19,8 +19,24 @@
 <script src="https://hammerjs.github.io/dist/hammer.js"></script>
 <script>
     $(document).ready(function(){
+        zoomFactor = 1.0
         bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
-        
+        bg.setTransform(zoomFactor, 0, 0);
+        var handleScroll = function(evt){
+			var delta = evt.wheelDelta ? evt.wheelDelta/1000 : evt.detail ? -evt.detail : 0;
+            
+			if (delta){
+                zoomFactor = Math.max(zoomFactor + delta, 0.2);
+                console.log(zoomFactor);
+                bg.setTransform(zoomFactor, 0, 0);
+            }
+			return evt.preventDefault() && false;
+		};
+        canv = document.getElementById('x-canvas');
+		canv.addEventListener('DOMMouseScroll',handleScroll,false);
+		canv.addEventListener('mousewheel',handleScroll,false);
+        //$('#x-canvas').css('width', 1600);
+        //$('#x-canvas-bg').css('width', 1600);
         $('.color-purple').addClass("active");
         
         $( '.color-item' ).on('click', function() {
@@ -34,7 +50,7 @@
             }
         });
         $( '.save-button' ).on('click', function() {
-            var data = document.getElementById('x-canvas-bg').toDataURL("image/png");
+            var data = bg.getURL
             $(this).attr("href", data);
         })
     });

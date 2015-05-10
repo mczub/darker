@@ -9,21 +9,30 @@ function HexBG(canv, bgcanv, width, height){
 	var num_x = WIDTH / (HEX_WIDTH);
 	var num_y = HEIGHT / (HEX_HEIGHT);
 	//var canvas = document.getElementById('x-canvas');
+	var screenCanvas = bgcanv;
+	var screenctx = screenCanvas.getContext("2d");
+	var bgcanvas = document.createElement("canvas");
 	var canvas = canv;
-	var bgcanvas = bgcanv;
 	bgcanvas.width = WIDTH;
 	bgcanvas.height = HEIGHT;
 	canvas.width = WIDTH;
 	canvas.height = HEIGHT;
+	screenCanvas.width = window.innerWidth;
+	screenCanvas.height = window.innerHeight;
 	var ctx = canvas.getContext("2d");
 	var bgctx = bgcanvas.getContext("2d");
 	var centers = [];
+	var colors = [];
 	var radialReqId = 0;
 	var radialCenter = [];
 	var radialHex;
 	var curRadFill = 0;
 	var freezeMouseHex = false;
-	var fillColor = "122, 82, 204"
+	var fillColor = "122, 82, 204";
+	var transformMode = false;
+	var scaleFactor = 1.00;
+    var panX = 0;
+    var panY = 0;
 	
 	for (var i = 0; i < num_x + 1; i++)
 	{
@@ -31,13 +40,14 @@ function HexBG(canv, bgcanv, width, height){
 		for (var j = 0; j < num_y + 1; j++)
 		{
 			if (j % 2 == 0){
-				centers[i][j] = {x: i * HEX_WIDTH, y: HEX_HEIGHT * j};
+				centers[i][j] = {x: i * HEX_WIDTH, y: HEX_HEIGHT * j, c: "rgba(255,255,255,1)"};
 			}else{
-				centers[i][j] = {x: HEX_WIDTH * i + HEX_WIDTH / 2, y: HEX_HEIGHT * j}
+				centers[i][j] = {x: HEX_WIDTH * i + HEX_WIDTH / 2, y: HEX_HEIGHT * j, c: "rgba(255,255,255,1)"}
 			}
 		}
 	}
 	drawHexes();
+	drawBGtoScreen();
 	//var socket = io.connect();
 		
 	HexBG.prototype.close = function(){
@@ -60,20 +70,60 @@ function HexBG(canv, bgcanv, width, height){
 		fillColor = rgbString.substring(4,rgbString.length - 1);
 		//console.log("rgba(" + fillColor + ",1)")
 	}
+	
+	HexBG.prototype.setTransform = function(scale, pan_x, pan_y){
+		scaleFactor = scale;
+		panX = (1 - scaleFactor) * 800 + pan_x;
+		panY = (1 - scaleFactor) * 800 + pan_y;
+		
+		//clearBG();
+		clearFG();
+		
+		ctx.setTransform(scale, 0, 0, scale, panX, panY);
+		//bgctx.setTransform(scale, 0, 0, scale, panX, panY);
+		//screenctx.setTransform(scale, 0, 0, scale, panX, panY);
+		//ctx.fillStyle='rgba(0,0,0,1)';
+		//ctx.fillRect(0,0,WIDTH, HEIGHT);
+		//ctx.globalCompositeOperation = 'source-atop';
+		//bgctx.fillStyle='rgba(255,255,255,1)';
+		//bgctx.fillRect(0,0,WIDTH, HEIGHT);
+		//bgctx.globalCompositeOperation = 'source-atop';
+		//drawHexes();
+		drawBGtoScreen();
+		//bgctx.globalCompositeOperation = 'source-over';
+		
+	}
+	
+	HexBG.prototype.getURL = function(){
+		return bgcanvas.toDataURL("image/png");
+	}
 
 	function drawHexes()
 	{
 		
 		for (var i = 0; i < num_x + 1; i++){
 			for (var j = 0; j < num_y + 1; j++){
-				drawHex(bgctx, i,j, "rgba(255,255,255,1)","rgba(0,0,0,1)", 1, SIZE )
+				drawHex(bgctx, i,j, centers[i][j].c,"rgba(180,180,180,1)", 1, SIZE )
 				
 			}
 		}
 	}
+	function drawBGtoScreen()
+	{
+		screenctx.clearRect(0,0,screenCanvas.width, screenCanvas.height)
+		screenctx.drawImage(bgcanvas, (screenCanvas.width - WIDTH ) / 2 + panX, (screenCanvas.height - HEIGHT ) / 2 + panY, WIDTH *scaleFactor, HEIGHT * scaleFactor )
+	}
 	
 	function drawHex(context, i, j, fill, outline, lineWidth, size)
 	{
+		context.save();
+		context.beginPath();
+		context.moveTo(0,0);
+		context.lineTo(WIDTH, 0);
+		context.lineTo(WIDTH, HEIGHT);
+		context.lineTo(0, HEIGHT);
+		context.closePath();
+		context.clip();
 		if (i < 0) i = 0;
 		if (j < 0) j = 0;
 		context.fillStyle = fill;
@@ -90,26 +140,33 @@ function HexBG(canv, bgcanv, width, height){
 		context.fill();
 		context.closePath();
 		context.stroke();
+		context.restore();
+		
 	}
 	
 	function clearFG()
 	{
 		ctx.clearRect(0,0,WIDTH, HEIGHT);
 	}
+	
+	function clearBG()
+	{
+		//bgctx.fillStyle='rgba(0,0,0,1)';
+		bgctx.clearRect(0,0,WIDTH, HEIGHT);
+	}
+	
 	function onMouseMove(event)
 	{	
 		
 		//console.log(event.pageX + "," + event.pageY);
-		console.log(canvas.getBoundingClientRect().left, canvas.getBoundingClientRect().top);
+		//console.log(canvas.getBoundingClientRect().left, canvas.getBoundingClientRect().top);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
-		var canv_y_pos = event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset;
+		var canv_x_pos = (event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset - panX) / scaleFactor;
+		var canv_y_pos = (event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset - panY) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
-		//var x_unit = Math.floor(canv_x_pos / (WIDTH / NUM_X));
-		//var y_unit = Math.floor(canv_y_pos / (HEIGHT / NUM_Y));
-		//console.log(x_unit + "," + y_unit);
+
 		if (freezeMouseHex) return;
 		clearFG();
 		var hex = getHex(canv_x_pos,canv_y_pos);
@@ -124,8 +181,8 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
-		var canv_y_pos = event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset;
+		var canv_x_pos = (event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset) / scaleFactor;
+		var canv_y_pos = (event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
@@ -142,7 +199,7 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		cancelAnimationFrame(radialReqId);
-		ctx.globalCompositeOperation = 'source-over';
+		//ctx.globalCompositeOperation = 'source-over';
 		if (radialCenter.x < 0 || radialCenter.x > WIDTH) return;
 		if (radialCenter.y < 0 || radialCenter.y > HEIGHT) return;
 		
@@ -159,15 +216,15 @@ function HexBG(canv, bgcanv, width, height){
 			clearFG();
 			freezeMouseHex = false;
 			curRadFill = 0;
-			ctx.globalCompositeOperation = 'source-over';
+			//ctx.globalCompositeOperation = 'source-over';
 			return;
 		}
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset;
-		var canv_y_pos = event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset;
+		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset - panX) / scaleFactor;
+		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset - panY) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
@@ -195,9 +252,9 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset;
+		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset - panX) / scaleFactor;
 		//console.log(canvas.getBoundingClientRect().left , canvas.getBoundingClientRect().top)
-		var canv_y_pos = event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset;
+		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset - panY) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
@@ -245,7 +302,8 @@ function HexBG(canv, bgcanv, width, height){
 	var hexhammer = new Hammer(elem);
 	hexhammer.off('pan');
 	hexhammer.off('swipe');
-	hexhammer.get('press').set({ time: 250, threshold: 999999 });
+	hexhammer.get('press').set({ time: 100, threshold: 999999 });
+	hexhammer.get('tap').set({ time: 100, interval: 0});
 	hexhammer.get('pan').set({ threshold: 999999 });
 	hexhammer.get('swipe').set({ threshold: 999999 });
 
@@ -362,10 +420,14 @@ function HexBG(canv, bgcanv, width, height){
 				]
 				var fill = "rgba(" + fillColor + "," + opacity[rad_hexes][distance] + ")"
 				//console.log(rad_hexes, distance, fill)
-				drawHex(bgctx, i, j, fill, "rgba(0,0,0,1)", 1, SIZE)
+				drawHex(bgctx, i, j, fill, "rgba(0,0,0,0)", 1, SIZE)
+				var scaled_x = (centers[i][j].x * scaleFactor) + panX;
+				var scaled_y = (centers[i][j].y * scaleFactor) + panY;
+				//var color = bgctx.getImageData(scaled_x, scaled_y, 1, 1).data;
+				//centers[i][j].c = "rgba(" + color[0] + "," + color[1] + "," + color[2] + ",1)"; 
 			}
 		}
-		//console.log(explode)
+		drawBGtoScreen();
 	}
 }
 

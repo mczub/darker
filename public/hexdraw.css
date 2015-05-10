@@ -29,6 +29,7 @@ a:active {
 #x-canvas
 {
 	position:absolute;
+	width: auto;
 	top:50%;
 	left:50%;
 	transform: translate(-50%, -50%);
@@ -38,6 +39,7 @@ a:active {
 #x-canvas-bg
 {
 	position:absolute;
+	width: auto;
 	top:50%;
 	left:50%;
 	transform: translate(-50%, -50%);
