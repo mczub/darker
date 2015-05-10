@@ -123,12 +123,12 @@ a:active {
 	line-height: 50px;
 	font-size: 0.5em;
 	height:50px;
-	width:12px;
+	width:18px;
 	float:right;
-	background-color:rgba(150,150,150,1);
+	background-color:rgba(255,255,255,1);
 }
 .color-select:hover{
-	background-color:rgba(255,255,255,1);
+	background-color:rgba(210,210,210,1);
 }
 .color-item
 {
