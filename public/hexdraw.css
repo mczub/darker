@@ -115,6 +115,10 @@ a:active {
 {
 	background-color:rgb(122, 82, 204);
 }
+.color-custom
+{
+	background-color:rgb(69, 129, 142);
+}
 .color-select
 {
 	position:absolute;

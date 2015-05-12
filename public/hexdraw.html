@@ -57,8 +57,9 @@
             var data = bg.getURL
             $(this).attr("href", data);
         });
+        $(".color-custom").css('background-color', "#45818e");
         $(".color-select").spectrum({
-            color: "#000",
+            color: "#45818e",
             showPaletteOnly: true,
             hideAfterPaletteSelect:true,
             palette: [["#000000", "#434343", "#666666", "#999999", "#b7b7b7", "#cccccc", "#d9d9d9", "#efefef", "#f3f3f3", "#ffffff"],
@@ -79,6 +80,7 @@
                         .removeClass("active")
                 }
                 bg.setColor(color.toRgbString());
+                console.log(color.toRgbString())
             }
         });
     });
