@@ -53,11 +53,14 @@ function HexBG(canv, bgcanv, width, height){
 	HexBG.prototype.close = function(){
 		ctx.clearRect(0,0,WIDTH,HEIGHT);
 		bgctx.clearRect(0,0,WIDTH,HEIGHT);
+		screenctx.clearRect(0,0,window.innerWidth,window.innerHeight);
 		var elem = document.getElementById('x-canvas');
 		elem.removeEventListener('mousemove', onMouseMove);
 		hexhammer.destroy();
 		canvas = null;
 		ctx = null;
+		screenCanvas = null;
+		screenctx = null;
 		bgcanvas = null;
 		bgctx = null;
 	}
