@@ -221,8 +221,8 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset - panX) / scaleFactor;
-		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset - panY) / scaleFactor;
+		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - panX) / scaleFactor;
+		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - panY) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		
@@ -250,9 +250,9 @@ function HexBG(canv, bgcanv, width, height){
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
 		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
 		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
-		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - window.pageXOffset - panX) / scaleFactor;
+		var canv_x_pos = (event.center.x - canvas.getBoundingClientRect().left - panX) / scaleFactor;
 		//console.log(canvas.getBoundingClientRect().left , canvas.getBoundingClientRect().top)
-		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - window.pageYOffset - panY) / scaleFactor;
+		var canv_y_pos = (event.center.y - canvas.getBoundingClientRect().top - panY) / scaleFactor;
 		if (canv_x_pos > WIDTH || canv_x_pos < 0) return;
 		if (canv_y_pos > HEIGHT || canv_y_pos < 0) return;
 		

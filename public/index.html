@@ -13,15 +13,14 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src="./script/jquery.sticky.js"></script>
 <script src="/socket.io/socket.io.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.2/velocity.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.velocity.js"></script>
 <script src="https://hammerjs.github.io/dist/hammer.js"></script>
 <script>
     $(document).ready(function(){
-        var vh = $(window).height();
-        var navh = $(".nav").height() + 60;
-        console.log(vh);
-        $(".nav").sticky({topSpacing:(vh-navh)});
         //$(".biglogo").width($(".col-md-4").width());
         var socket = io.connect();
         var bg = new XBackground(document.getElementById('x-canvas'), 1600, 1600, socket)
@@ -47,12 +46,47 @@
                  bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
             }
         });
-    });
-    $(window).resize(function() {
-        $(".nav").unstick();
-        var vh = $(window).height();
-        var navh = $(".nav").height() + 60;
-        $(".nav").sticky({topSpacing:(vh-navh)});
+        var controller = new ScrollMagic.Controller();
+        var bgfade = new ScrollMagic.Scene({
+            offset: window.innerHeight / 2
+        })
+            .setVelocity("canvas",{ blur: 10 }, 200)
+            .addTo(controller)
+        var contentfade = new ScrollMagic.Scene({
+            offset: window.innerHeight / 2
+        })
+            .setVelocity(".all-content",{opacity:1}, 200)
+            .addTo(controller)
+        var aboutScene = new ScrollMagic.Scene({
+            offset: 0,
+            duration: window.innerHeight
+        })
+            .setClassToggle("#about", "active")
+            .addTo(controller)
+        var resumeScene = new ScrollMagic.Scene({
+            offset: window.innerHeight,
+            duration: window.innerHeight / 2
+        })
+            .setClassToggle("#resume", "active")
+            .addTo(controller)
+        var projectsScene = new ScrollMagic.Scene({
+            offset: 3 * window.innerHeight / 2,
+            duration: window.innerHeight / 2
+        })
+            .setClassToggle("#projects", "active")
+            .addTo(controller)
+        var musicScene = new ScrollMagic.Scene({
+            offset: 4 * window.innerHeight / 2,
+            duration: window.innerHeight / 2
+        })
+            .setClassToggle("#music", "active")
+            .addTo(controller)
+        var contactScene = new ScrollMagic.Scene({
+            offset: 5 * window.innerHeight / 2,
+            duration: window.innerHeight / 2
+        })
+            .setClassToggle("#contact", "active")
+            .addTo(controller)
     });
     
     
@@ -80,9 +114,9 @@
             <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
         </div></a>
     </section>
-    <div class="container-fluid">
+    <div class="all-content container-fluid">
     <div class="row">
-        <div class="col-md-4 nav-container hidden-xs hidden-sm">
+        <div class="col-md-3 nav-container hidden-xs hidden-sm">
             <ul class="nav nav-stacked">
                 <li role="presentation" class="active"><a href="#about">About</a></li>
                 <li role="presentation"><a href="#resume">Resume</a></li>
@@ -91,7 +125,7 @@
                 <li role="presentation"><a href="#contact">Contact</a></li>
             </ul>
         </div>
-        <div class="col-md-8 content-frame">
+        <div class="col-md-9 content-frame">
             <section id="about" class="content">
                 <div class='content-header'>About</div>
                 <p>My name is Matthew Czubakowski, and welcome to my personal website.</p>
