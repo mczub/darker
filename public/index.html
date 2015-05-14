@@ -46,46 +46,68 @@
                  bg = new HexBG(document.getElementById('x-canvas'), document.getElementById('x-canvas-bg'), 1600, 1600)
             }
         });
+        $('li > .about').on('click', function(){
+            $('body').scrollTop($('.about-navguide').offset().top - window.innerHeight / 2 + 10)
+        })
+        $('li > .resume').on('click', function(){
+            $('body').scrollTop($('.resume-navguide').offset().top - window.innerHeight / 2 + 10)
+        })
+        $('li > .projects').on('click', function(){
+            $('body').scrollTop($('.projects-navguide').offset().top - window.innerHeight / 2 + 10)
+        })
+        $('li > .music').on('click', function(){
+            $('body').scrollTop($('.music-navguide').offset().top - window.innerHeight / 2 + 10)
+        })
+        $('li > .contact').on('click', function(){
+            $('body').scrollTop($('.contact-navguide').offset().top - window.innerHeight / 2 + 10)
+        })
         var controller = new ScrollMagic.Controller();
         var bgfade = new ScrollMagic.Scene({
-            offset: window.innerHeight / 2
+            triggerElement: ".content-navguide",
+            
         })
-            .setVelocity("canvas",{ blur: 10 }, 200)
+            .setVelocity("canvas",{ blur: 10 }, 150)
             .addTo(controller)
         var contentfade = new ScrollMagic.Scene({
-            offset: window.innerHeight / 2
+            triggerElement: ".content-navguide"
         })
-            .setVelocity(".all-content",{opacity:1}, 200)
+            .on("enter", function(event){
+               $(".all-content").removeClass("hidden"); 
+            })
+            .on("leave", function(event){
+                $(".all-content").addClass("hidden");
+            })
+            .setVelocity(".all-content",{opacity:1}, 150)
             .addTo(controller)
         var aboutScene = new ScrollMagic.Scene({
-            offset: 0,
-            duration: window.innerHeight
+            triggerElement: ".about-navguide",
+            duration: 500
         })
-            .setClassToggle("#about", "active")
+            .setClassToggle(".about", "active")
             .addTo(controller)
         var resumeScene = new ScrollMagic.Scene({
-            offset: window.innerHeight,
-            duration: window.innerHeight / 2
+            triggerElement: ".resume-navguide",
+            duration: 500
         })
-            .setClassToggle("#resume", "active")
+            .setClassToggle(".resume", "active")
             .addTo(controller)
         var projectsScene = new ScrollMagic.Scene({
-            offset: 3 * window.innerHeight / 2,
-            duration: window.innerHeight / 2
+            triggerElement: ".projects-navguide",
+            duration: 500
         })
-            .setClassToggle("#projects", "active")
+            .setClassToggle(".projects", "active")
             .addTo(controller)
         var musicScene = new ScrollMagic.Scene({
-            offset: 4 * window.innerHeight / 2,
-            duration: window.innerHeight / 2
+            triggerElement: ".music-navguide",
+            duration: 500
         })
-            .setClassToggle("#music", "active")
+            .setClassToggle(".music", "active")
             .addTo(controller)
         var contactScene = new ScrollMagic.Scene({
-            offset: 5 * window.innerHeight / 2,
-            duration: window.innerHeight / 2
+            triggerElement: ".contact-navguide",
+            duration: 500
         })
-            .setClassToggle("#contact", "active")
+            .setClassToggle(".contact", "active")
             .addTo(controller)
     });
     
@@ -114,73 +136,51 @@
             <span class="logo-text-front">Czub</span><span class="logo-text-back">akowski</span>
         </div></a>
     </section>
-    <div class="all-content container-fluid">
+    <div class="all-content container-fluid hidden">
     <div class="row">
         <div class="col-md-3 nav-container hidden-xs hidden-sm">
             <ul class="nav nav-stacked">
-                <li role="presentation" class="active"><a href="#about">About</a></li>
-                <li role="presentation"><a href="#resume">Resume</a></li>
-                <li role="presentation"><a href="#projects">Projects</a></li>
-                <li role="presentation"><a href="#music">Music</a></li>
-                <li role="presentation"><a href="#contact">Contact</a></li>
+                <li role="presentation"><a href="javascript:;" class="about">About</a></li>
+                <li role="presentation"><a href="javascript:;" class="resume">Resume</a></li>
+                <li role="presentation"><a href="javascript:;" class="projects">Projects</a></li>
+                <li role="presentation"><a href="javascript:;" class="music">Music</a></li>
+                <li role="presentation"><a href="javascript:;" class="contact">Contact</a></li>
             </ul>
         </div>
-        <div class="col-md-9 content-frame">
-            <section id="about" class="content">
+        <div class="col-md-9 content-frame ">
+            <section id="about" class="about content">
                 <div class='content-header'>About</div>
-                <p>My name is Matthew Czubakowski, and welcome to my personal website.</p>
-                <p>I'm a software engineer located in San Francisco. I graduated from <a href="http://caltech.edu">Caltech</a> in 2009.</p>
-                <p>By day, I develop test automation for Xero in San Francisco. I have a <a href="#resume">broad skillset</a> with experience in software development, mixed-signal ASIC design, systems engineering, and circuit design and test.</p>
-                <p>By night, I <a href="#projects">experiment</a> with web design, game development, music, and video game livestreaming.</p>
-                <p>Feel free to <a href="#contact">contact</a> me through social media. I'm easiest to get a hold of through <a href="mailto:mczub@mczub.com">e-mail</a>, <a href="http://twitter.com/mczub">Twitter</a>, and <a href="http://facebook.com/mczub">Facebook</a>.</p>
+                <p>matthew czubakowski</p>
+                <p>san francisco, ca</p>
+                <p>things i make:</p>
+                    <li>websites</li>
+                    <li>software to test websites</li>
+                    <li>computer chips</li>
+                    <li>music</li>
+                    <li>bad jokes</li>
             </section>
-            <section id="resume" class="content">
+            <section id="resume" class="resume content">
                 <div class='content-header'>Resume</div>
-                <p>For a more detailed resume or specific job-related inquiries, please <a style="display:inline" href="#contact">contact me directly</a>. You can also find me on <a href="https://www.linkedin.com/in/mczub">LinkedIn</a>.</p>
-                <div class='resume-education resume-section'>
-                    <div class='resume-heading col-md-2'>Education</div>
-                    <div class='resume-content col-md-10'>California Institute of Technology, BS, Electrical Engineering, Class of 2009</div>
-                </div>
+                <p>for a more detailed resume, <a style="display:inline" href="#contact">contact me directly</a> or on <a href="https://www.linkedin.com/in/mczub">linkedin</a>
+                
                 <div class='resume-skills resume-section'>
-                    <div class='resume-heading col-md-2'>Skills</div>
-                    <div class='resume-content col-md-10'>
-                        <div>Software
+                    <div class='resume-content'>
+                        <div>software:
                             <ul>
-                                <li>C#, JavaScript, Python, C++, CSS</li>
-                                <li>Selenium WebDriver, XPath, Gatling, Express, Node, SQL</li>
-                                <li>Git, Github, NuGet, NPM, TeamCity</li>
+                                <li>C#, JavaScript, Python, C++, Node</li>
+                                <li>Selenium WebDriver, Express, SQL, CSS</li>
                             </ul>
                         </div>
-                        <div>Hardware
+                        <div>hardware:
                             <ul>
                                 <li>Mixed-signal integrated circuit design and layout, including Cadence tools</li>
-                                <li>Solid-state and thin film fabrication and testing methods, including wafer bonding, photolithography, and SEM</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class='resume-work resume-section'>
-                    <div class='resume-heading col-md-2'>Work Experience</div>
-                    <div class='resume-content col-md-10'>
-                        <div>Quality Engineer, Xero, 2014-Current
-                            <ul>
-                                <li>Architected and maintained front-end automated test framework using C#, Selenium, and SpecFlow</li>
-                                <li>Contributed to back-end automated test framework using Scala and Gatling</li>
-                                <li>Developed an at-a-glance web dashboard to display test environment status</li>
-                                <li>Trained QA to write automated front-end and back-end tests</li>
-                            </ul>
-                        </div>
-                        <div>Electrical Engineer, Raytheon Space and Airborne Systems, 2009-2014
-                            <ul>
-                                <li>Designed, tested, and validated electronic systems at module, PCB, and circuit levels</li>
-                                <li>Performed test systems design, including both hardware and software</li>
-                                <li>Designed and implemented digital and analog blocks in multiple mixed-signal ASICs with first-pass success in submicron processes using Cadence tools</li>
+                                <li>Hardware system integration and test</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
-            <section id="projects" class="content">
+            <section id="projects" class="projects content">
                 <div class='content-header'>Projects</div>
                 <a href="http://mczub.com"><div class='project-card project-website'>
                     <div class='project-title'>mczub.com</div>
@@ -188,34 +188,26 @@
                     <div class='project-description'>my personal website</div>
                     <div class='project-tools hidden-xs hidden-sm'>Express, Node.js, Bootstrap, Azure</div>
                 </div></a>
-                <a href="http://mczub.com"><div class='project-card project-landing'>
+                <a href="http://mczub.com"><div class='project-card project-x-card'>
                     <div class='project-title'><span class='project-x'></span></div>
                     <div class='project-url hidden-xs hidden-sm'>http://mczub.com</div>
                     <div class='project-description'>multi-user dynamic landing page</div>
                     <div class='project-tools hidden-xs hidden-sm'>Express, Socket.IO, HTML5 Canvas</div>
                 </div></a>
-                <a href="http://mczub.com/hexdraw"><div class='project-card project-landing'>
+                <a href="http://mczub.com/hexdraw"><div class='project-card project-hex-card'>
                     <div class='project-title'><span class='project-hex'></span></div>
                     <div class='project-url hidden-xs hidden-sm'>http://mczub.com/hexdraw</div>
                     <div class='project-description'>canvas-based drawing app</div>
                     <div class='project-tools hidden-xs hidden-sm'>JavaScript, Hammer.js, HTML5 Canvas</div>
                 </div></a>
             </section>
-            <section id="music" class="content">
+            <section id="music" class="music content">
                 <div class='content-header'>Music</div>
-                <p>I'm a classically trained pianist and violinist with experience playing both solo and in orchestras and ensembles. You can find some of my music on <a href="http://youtube.com/mczub1">YouTube</a>, <a href="http://soundcloud.com/mczub">SoundCloud</a>, or livestreaming on <a href="http://twitch.tv/mczub">Twitch</a>. For performance or collaboration requests, feel free to <a href="#contact">contact me</a>.</p>
-                <div class='media col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2'>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/videoseries?list=FLGGUgXwSYQ1ptPeW1Iupv9w"></iframe>
-                    </div> 
-                </div>
-                <div class='media col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2'>
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/users/5806112&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
-                    </div> 
-                </div>
+                <p>i'm a classically trained pianist and violinist with experience playing both solo and in orchestras and ensembles.</p>
+                <p>you can find some of my music on <a href="http://youtube.com/mczub1">youtube</a>, <a href="http://soundcloud.com/mczub">soundcloud</a>, or livestreaming on <a href="http://twitch.tv/mczub">twitch</a>.</p>
+                <p>feel free to <a href="#contact">contact me</a> if you'd like to collaborate.</p>
             </section>
-            <section id="contact" class="content">
+            <section id="contact" class="contact content">
                 <div class='content-header'>Contact</div>
                 <p><a href='http://twitter.com/mczub'>twitter <span class='username'>mczub</span></a></p>
                 <p><a href='http://facebook.com/mczub'>facebook <span class='username'>mczub</span></a></p>
@@ -230,16 +222,13 @@
         </div>
     </div>
     </div>
+    <div class='content-navguide'>
+        <div class='about-navguide'></div>
+        <div class='resume-navguide'></div>
+        <div class='projects-navguide'></div>
+        <div class='music-navguide'></div>
+        <div class='contact-navguide'></div>
+    </div>
 </body>
 <script src="./script/xbackground.js"></script>
 <script src="./script/hexBG.js"></script>
-<script>
-$("a[href^='#']").on('click', function(e){
-    e.preventDefault();
-    console.log('toot');
-    var hash = this.hash;
-    $('html, body').animate({
-        scrollTop: $(hash).offset().top
-    }, 500);
-});
-</script>

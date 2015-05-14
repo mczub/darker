@@ -80,8 +80,10 @@ for (var i = 0; i < NUM_X; i++)
 	function onClick(event){
 		//console.log(event.pageX + "," + event.pageY);
 		//console.log(elem.offsetWidth + "," + elem.offsetHeight);
-		var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
-		var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		//var canv_x_pos = (WIDTH - elem.offsetWidth) / 2 + event.pageX;
+		//var canv_y_pos = (HEIGHT - elem.offsetHeight) / 2 + event.pageY;
+		var canv_x_pos = event.pageX - canvas.getBoundingClientRect().left - window.pageXOffset;
+		var canv_y_pos = event.pageY - canvas.getBoundingClientRect().top - window.pageYOffset;
 		var x_unit = Math.floor(canv_x_pos / (WIDTH / NUM_X));
 		var y_unit = Math.floor(canv_y_pos / (HEIGHT / NUM_Y));
 		//console.log(x_unit + "," + y_unit);

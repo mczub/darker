@@ -3,7 +3,8 @@ body
 	font-family: 'Roboto Condensed', sans-serif;
 	font-weight: 400;
 	background-color:rgba(0, 0, 0, 1);
-	height:350vh;
+	height: auto;
+	overflow-y: scroll;
 }
 html
 {
@@ -225,6 +226,11 @@ hr.logo-line
 {
 	color:rgba(240,240,240,1);
 }
+.nav > li > a.active
+{
+	font-weight:bold;
+	color:#888888 !important;
+}
 
 .content-frame
 {
@@ -255,7 +261,7 @@ section.active
 .content-header
 {
 	text-transform: lowercase;
-	font-size:2em;
+	font-size:1.5em;
 	color:#888888;
 }
 .content
@@ -265,31 +271,54 @@ section.active
 }
 .resume-section
 {
-	padding:20px;
+	padding:0px;
+	text-transform: lowercase;
 }
 .resume-heading
 {
 	font-weight:700;
 	padding-left:0;
 }
-ul
+li
 {
 list-style-type: none;
 }
 .project-card
 {
+	color:#ffffff;
 	background-color:#222222;
 	position:relative;
 	width:100%;
-	height:150px;
+	height:80px;
 	margin-bottom:20px;
+	-webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+.project-card:hover{
+	-webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%);
+}
+.project-x-card
+{
+	background-image:url('project-x.png');
+}
+.project-hex-card
+{
+	background-image:url('project-hex.png');
 }
 .project-title
 {
 	position:absolute;
 	left:20px;
-	top:20px;
-	font-size:2em;
+	top:8px;
+	line-height:64px;
+	font-size:1.5em;
 }
 .project-x
 {
@@ -311,39 +340,71 @@ list-style-type: none;
 }
 .project-url
 {
+	visibility:hidden;
 	position:absolute;
 	left:20px;
-	bottom:20px;
+	bottom:8px;
 }
 .project-description
 {
 	position:absolute;
-	font-size:1.5em;
+	font-size:1em;
 	text-align:right;
 	right:20px;
-	top:20px;
+	top:8px;
 }
 .project-tools
 {
 	position:absolute;
 	text-align:right;
 	right:20px;
-	bottom:20px;
+	bottom:8px;
 }
 .username
 {
 	color:rgba(80,80,80,1);
 }
+.content-navguide
+{
+	position:relative;
+	top:100vh;
+}
+.about-navguide
+{
+	position:relative;
+	height:500px;
+}
+.resume-navguide
+{
+	position:relative;
+	height:500px;
+}
+.projects-navguide
+{
+	position:relative;
+	height:500px;
+}
+.music-navguide
+{
+	position:relative;
+	height:500px;
+}
+.contact-navguide
+{
+	position:relative;
+	height:1000px;
+}
 
-@media only screen and (max-width: 992px)
+@media only screen and (max-width: 991px)
 { 
 	.project-description
 	{
 	position:absolute;
 	font-size:1em;
 	text-align:right;
+	line-height:64px;
 	right:20px;
-	top:auto;
+	top:8px;
 	bottom:20px;
 	}
 	.all-content
