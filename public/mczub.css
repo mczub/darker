@@ -111,13 +111,14 @@ a:active {
 {
 	width:auto;
 	height:auto;
-	top:240px;
+	top:20px;
+	right:0px;
 	padding-left:20px;
 	padding-right:20px;
 	padding-top:10px;
 	padding-bottom:10px;
 	font-size:2em;
-	position:absolute;
+	position:fixed;
 	display:inline-block;
 	text-transform:lowercase;
 	background-color:rgba(0,0,0,0.6);
@@ -196,11 +197,11 @@ hr.logo-line
 	overflow:hidden;
 	position:fixed;
 	background-color: rgba(0,0,0,1);
-	height:50%;
+	height:70%;
 	width: 75%;
 	left: 50%;
 	margin: 0 0 0 -37.5%;
-	top: 25%;
+	top: 15%;
 	z-index: 11;
 }
 .nav

@@ -73,9 +73,17 @@
         })
             .on("enter", function(event){
                $(".all-content").removeClass("hidden"); 
+               $(".fp-picker").addClass("hidden");
+               if ($(".fp-hex").hasClass("active")){
+                   $(".hex-view-full").addClass("hidden");
+               }
             })
             .on("leave", function(event){
                 $(".all-content").addClass("hidden");
+                $(".fp-picker").removeClass("hidden");
+                if ($(".fp-hex").hasClass("active")){
+                   $(".hex-view-full").removeClass("hidden");
+                }
             })
             .setVelocity(".all-content",{opacity:1}, 150)
             .addTo(controller)
@@ -105,7 +113,7 @@
             .addTo(controller)
         var contactScene = new ScrollMagic.Scene({
             triggerElement: ".contact-navguide",
-            duration: 500
+            //duration: 500
         })
             .setClassToggle(".contact", "active")
             .addTo(controller)
@@ -128,7 +136,7 @@
             <span class='fp-hex fp-item'></span>
         </div>
         <div class='hex-view-full hidden-xs hidden-sm'>
-            <a href='/hexdraw'>view full version ></a>
+            <a href='/hexdraw'>full version ></a>
         </div>
         <a href="#top"><div class="logo biglogo hidden-xs hidden-sm">
             <span class="logo-text-front">M</span><span class="logo-text-back">atthew</span>
